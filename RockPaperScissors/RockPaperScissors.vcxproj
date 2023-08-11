@@ -127,7 +127,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BigBangGameStrategy.cpp" />
+    <ClCompile Include="ClassicGameStrategy.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="RockPaperScissors.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BigBangGameStrategy.h" />
+    <ClInclude Include="ClassicGameStrategy.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameStrategy.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
