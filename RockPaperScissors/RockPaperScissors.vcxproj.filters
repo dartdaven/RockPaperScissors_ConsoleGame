@@ -18,27 +18,48 @@
     <ClCompile Include="RockPaperScissors.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ClassicGameStrategy.cpp">
+    <ClCompile Include="ClassicGameRules.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
+    <ClCompile Include="GameManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BigBangGameStrategy.cpp">
+    <ClCompile Include="BigBangGameRules.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HumanPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ComputerPlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameStrategy.h">
+    <ClInclude Include="GameRules.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ClassicGameStrategy.h">
+    <ClInclude Include="ClassicGameRules.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
+    <ClInclude Include="GameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BigBangGameStrategy.h">
+    <ClInclude Include="BigBangGameRules.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HumanPlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ComputerPlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="enumRules.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="enumMove.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

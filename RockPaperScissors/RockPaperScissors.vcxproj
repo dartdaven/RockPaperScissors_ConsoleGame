@@ -127,16 +127,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BigBangGameStrategy.cpp" />
-    <ClCompile Include="ClassicGameStrategy.cpp" />
-    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="BigBangGameRules.cpp" />
+    <ClCompile Include="ClassicGameRules.cpp" />
+    <ClCompile Include="ComputerPlayer.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="HumanPlayer.cpp" />
     <ClCompile Include="RockPaperScissors.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BigBangGameStrategy.h" />
-    <ClInclude Include="ClassicGameStrategy.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameStrategy.h" />
+    <ClInclude Include="BigBangGameRules.h" />
+    <ClInclude Include="ClassicGameRules.h" />
+    <ClInclude Include="ComputerPlayer.h" />
+    <ClInclude Include="enumMove.h" />
+    <ClInclude Include="enumRules.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameRules.h" />
+    <ClInclude Include="HumanPlayer.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
