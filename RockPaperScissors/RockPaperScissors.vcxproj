@@ -130,20 +130,32 @@
     <ClCompile Include="BigBangGameRules.cpp" />
     <ClCompile Include="ClassicGameRules.cpp" />
     <ClCompile Include="ComputerPlayer.cpp" />
+    <ClCompile Include="DuelTournament.cpp" />
+    <ClCompile Include="EachVsEachTournament.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GridTournament.cpp" />
     <ClCompile Include="HumanPlayer.cpp" />
+    <ClCompile Include="MassTournament.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="RockPaperScissors.cpp" />
+    <ClCompile Include="SingleTournament.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BigBangGameRules.h" />
     <ClInclude Include="ClassicGameRules.h" />
     <ClInclude Include="ComputerPlayer.h" />
+    <ClInclude Include="DuelTournament.h" />
+    <ClInclude Include="EachVsEachTournament.h" />
     <ClInclude Include="enumMove.h" />
     <ClInclude Include="enumRules.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameRules.h" />
+    <ClInclude Include="GridTournament.h" />
     <ClInclude Include="HumanPlayer.h" />
+    <ClInclude Include="MassTournament.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="SingleTournament.h" />
+    <ClInclude Include="Tournament.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

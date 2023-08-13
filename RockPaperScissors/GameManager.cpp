@@ -2,29 +2,23 @@
 
 #include <iostream>
 #include <unordered_map>
+#include <memory>
 #include <windows.h>
 
 #include "ClassicGameRules.h"
 #include "BigBangGameRules.h"
 #include "HumanPlayer.h"
 #include "ComputerPlayer.h"
+#include "Tournament.h"
+#include "SingleTournament.h"
 
 #include "enumMove.h"
 
 void GameManager::start()
 {
-    //TO DO how many will Play?
-
+    std::unique_ptr<GameRules> selectedRules;
+    
     bool rulesHaveBeenChosen = false;
-
-    GameRules* selectedRules = nullptr;
-
-    ClassicGameRules classicGameRules;
-    BigBangGameRules bigBangGameRules;
-
-    HumanPlayer player;
-    ComputerPlayer comp;
-
     do
     {
         int temp;
@@ -34,12 +28,12 @@ void GameManager::start()
 
         if (temp == 1)
         {
-            selectedRules = &classicGameRules;
+            selectedRules = std::make_unique<ClassicGameRules>();
             rulesHaveBeenChosen = true;
         }
         else if (temp == 2)
         {
-            selectedRules = &bigBangGameRules;
+            selectedRules = std::make_unique<BigBangGameRules>();
             rulesHaveBeenChosen = true;
         }
         else
@@ -48,42 +42,43 @@ void GameManager::start()
         }
     } while (!rulesHaveBeenChosen);
 
+    int wins4Victory{ 0 };
+    std::cout << "How many wins are needed to finish the round: ";
+    std::cin >> wins4Victory;
+    //TO DO check for correct amount
 
-    //TEMPORARY
-    std::unordered_map<Move, std::string> movesToString
+    int playersAmount{ 0 };
+
+    //ask Alexey if I can do it inside 
+    std::vector<std::unique_ptr<Player>> players;
+
+    bool playersAmountHasBeenChosen = false;
+    do
     {
-        { Move::Rock, "Rock" },
-        { Move::Paper, "Paper" },
-        { Move::Scissors, "Scissors" },
-        { Move::Lizard, "Lizard" },
-        { Move::Spock, "Spock" }
-    };
+        std::cout << "How many players are going to play (10 max): ";
+        std::cin >> playersAmount;
 
-    while (true)
-    {
-        Move playerResult = player.MakeMove(selectedRules->rules());
-        std::cout << "You chose: " << movesToString[playerResult] << std::endl;
-        
-        Move compResult = comp.MakeMove(selectedRules->rules());
-        std::cout << "Computer chooses: " << movesToString[compResult] << std::endl;
-
-        int result = selectedRules->determineWinner(playerResult, compResult);
-    
-        switch (result)
+        if (playersAmount == 1)
         {
-        case 1:
-            std::cout << movesToString[playerResult] << " beats " << movesToString[compResult] << std::endl;
-            std::cout << "You won\n";
-            break;
-        case 2:
-            std::cout << movesToString[compResult] << " beats " << movesToString[playerResult] << std::endl;
-            std::cout << "Computer won\n";
-            break;
-        default:
-            std::cout << "It's the draw\n";
-            break;
+            players.push_back(std::make_unique<HumanPlayer>());
+            players.push_back(std::make_unique<ComputerPlayer>());
+            std::unique_ptr<Tournament> tournament = std::make_unique<SingleTournament>(std::move(players), std::move(selectedRules), wins4Victory);
+            tournament->Play();
+            playersAmountHasBeenChosen = true;
         }
+        else if (playersAmount == 2)
+        {
+            playersAmountHasBeenChosen = true;
+        }
+        else if (playersAmount > 2 || playersAmount < 11)
+        {
+            playersAmountHasBeenChosen = true;
+            std::cout << "What kind of tournament do you want: 1 - Each vs Each, 2 - Massive, 3 - Grid: ";
+        }
+        else
+        {
+            std::cout << "The game do not support THAT amount of players\n";
+        }
+    } while (!playersAmountHasBeenChosen);
 
-        //system("cls");
-    }
 }
