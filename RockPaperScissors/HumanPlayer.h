@@ -11,7 +11,7 @@ public:
 	HumanPlayer() : name("Player") {}
 
 	Move MakeMove(const Rules& rules) override;
-	std::string getName();
+	std::string getName() override;
 
 private:
 	std::string name;

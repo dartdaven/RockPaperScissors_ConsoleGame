@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include "enumMove.h"
 #include "enumRules.h"
 
@@ -9,6 +11,7 @@ public:
 	Player() : score(0) {}
 	virtual ~Player() {};
 	virtual Move MakeMove(const Rules& rules) = 0;
+	virtual std::string getName() = 0;
 	
 	int getScore();
 	void resetScore();
@@ -17,4 +20,3 @@ public:
 protected:
 	int score;
 };
-

@@ -2,6 +2,10 @@
 
 #include "Tournament.h"
 
-class Duel : public Tournament
+class DuelTournament : public Tournament
 {
+public:
+	using Tournament::Tournament;
+	void Play() override;
+	void ShowRulesAndScore() override;
 };

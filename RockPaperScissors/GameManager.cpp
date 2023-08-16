@@ -1,9 +1,10 @@
 #include "GameManager.h"
 
 #include <iostream>
-#include <unordered_map>
+#include <string>
 #include <memory>
-#include <windows.h>
+#include <limits>
+#include <sstream>
 
 #include "ClassicGameRules.h"
 #include "BigBangGameRules.h"
@@ -11,6 +12,8 @@
 #include "ComputerPlayer.h"
 #include "Tournament.h"
 #include "SingleTournament.h"
+#include "DuelTournament.h"
+#include "EachVsEachTournament.h"
 
 #include "enumMove.h"
 
@@ -18,67 +21,143 @@ void GameManager::start()
 {
     std::unique_ptr<GameRules> selectedRules;
     
-    bool rulesHaveBeenChosen = false;
-    do
+    //Chose the rules
+    while (true)
     {
-        int temp;
+        int rulesInt;
         
         std::cout << "Choose the rules: 1 - Classic, 2 - BigBangTheory: ";
-        std::cin >> temp;
+        std::cin >> rulesInt;
 
-        if (temp == 1)
+        if (rulesInt == 1)
         {
             selectedRules = std::make_unique<ClassicGameRules>();
-            rulesHaveBeenChosen = true;
+            break;
         }
-        else if (temp == 2)
+        else if (rulesInt == 2)
         {
             selectedRules = std::make_unique<BigBangGameRules>();
-            rulesHaveBeenChosen = true;
+            break;
         }
         else
         {
             std::cout << "Incorrect input\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
-    } while (!rulesHaveBeenChosen);
-
-    int wins4Victory{ 0 };
-    std::cout << "How many wins are needed to finish the round: ";
-    std::cin >> wins4Victory;
-    //TO DO check for correct amount
-
-    int playersAmount{ 0 };
+    }
 
     //ask Alexey if I can do it inside 
     std::vector<std::unique_ptr<Player>> players;
 
-    bool playersAmountHasBeenChosen = false;
-    do
+    //Choose the game mode
+    while (true)
     {
-        std::cout << "How many players are going to play (10 max): ";
-        std::cin >> playersAmount;
+        int playersAmount;
 
+        //Get amount of players
+        while (true)
+        {
+            std::cout << "How many players are going to play (10 max): ";
+            if (std::cin >> playersAmount && playersAmount >= 1 && playersAmount <= 10) { break; }
+            else
+            {
+                std::cout << "The game do not support THAT amount of players\n";
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
+        }
+
+        //Single player game mode
         if (playersAmount == 1)
         {
             players.push_back(std::make_unique<HumanPlayer>());
             players.push_back(std::make_unique<ComputerPlayer>());
-            std::unique_ptr<Tournament> tournament = std::make_unique<SingleTournament>(std::move(players), std::move(selectedRules), wins4Victory);
+
+            std::unique_ptr<Tournament> tournament = std::make_unique<SingleTournament>(std::move(players), std::move(selectedRules));
             tournament->Play();
-            playersAmountHasBeenChosen = true;
+            
+            break;
         }
+        //Duel game mode
         else if (playersAmount == 2)
         {
-            playersAmountHasBeenChosen = true;
+            std::string input;
+            
+            std::cout << "First Player name: ";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::getline(std::cin, input);
+
+            if (input.empty()) { players.push_back(std::make_unique<HumanPlayer>("Player 1")); }
+            else { players.push_back(std::make_unique<HumanPlayer>(input)); }
+
+            input.clear();
+
+            std::cout << "Second Player name: ";
+            std::cin.clear();
+            std::getline(std::cin, input);
+
+            if (input.empty()) { players.push_back(std::make_unique<HumanPlayer>("Player 2")); }
+            else { players.push_back(std::make_unique<HumanPlayer>(input)); }
+
+            std::unique_ptr<Tournament> tournament = std::make_unique<DuelTournament>(std::move(players), std::move(selectedRules));
+            tournament->Play();
+
+            break;
         }
-        else if (playersAmount > 2 || playersAmount < 11)
-        {
-            playersAmountHasBeenChosen = true;
-            std::cout << "What kind of tournament do you want: 1 - Each vs Each, 2 - Massive, 3 - Grid: ";
-        }
+        //Choose the tournament 
         else
         {
-            std::cout << "The game do not support THAT amount of players\n";
-        }
-    } while (!playersAmountHasBeenChosen);
+            int tempTournament;
 
+            while (true)
+            {
+                std::cout << "What kind of tournament do you want: 1 - Each vs Each, 2 - Massive, 3 - Grid: ";
+                if (std::cin >> tempTournament && tempTournament >= 1 && tempTournament <= 3) { break; }
+                else
+                {
+                    std::cout << "Incorrect input\n";
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                }
+            }
+            
+            //Each vs Each
+            if (tempTournament == 1)
+            {
+                int wins4Victory = getWins4Victory();
+
+                for (int i = 0; i < playersAmount; ++i)
+                {
+                    //TO DO ask players name
+                    std::ostringstream oss;
+                    oss << "Player " << i + 1;
+
+                    //to know why is he complaining
+                    players.push_back(std::make_unique<HumanPlayer>(oss.str()));
+                }
+
+                std::unique_ptr<Tournament> tournament = std::make_unique<EachVsEachTournament>(std::move(players), std::move(selectedRules), wins4Victory);
+                tournament->Play();
+                break;
+            }
+        }
+    }
+}
+
+int GameManager::getWins4Victory()
+{
+    while (true)
+    {
+        int wins4Victory{ 1 };
+        std::cout << "How many wins are needed to complete the round (Range 1-5, 2 Recommended): ";
+        if (std::cin >> wins4Victory && wins4Victory >= 1 && wins4Victory <= 5) { return wins4Victory; }
+        else
+        {
+            std::cout << "Incorrect input\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    }
 }

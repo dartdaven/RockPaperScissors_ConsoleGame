@@ -10,20 +10,22 @@ Move HumanPlayer::MakeMove(const Rules& rules)
 	{
 
 	case Rules::BigBang:
-		std::cout << "Please make your move. 0 - Rock, 1 - Paper, 2 - Scissors, 3 - Lizard, 4 - Spock: ";
-		std::cin >> temp;
+		std::cout << name << ", please make your move. 0 - Rock, 1 - Paper, 2 - Scissors, 3 - Lizard, 4 - Spock: ";
 
-		//TO DO check on correct input 
-		
-		return static_cast<Move>(temp);
+		while (true)
+        {
+			if (std::cin >> temp && temp >= 0 && temp <= 4) { return static_cast<Move>(temp); }
+            else { std::cout << "Incorrect input. Try again: "; }
+        } 
 	
 	default:
-		std::cout << "Please make your move. 0 - Rock, 1 - Paper, 2 - Scissors: ";
-		std::cin >> temp;
-
-		//TO DO check on correct input 
-
-		return static_cast<Move>(temp);
+		std::cout << name << ", please make your move. 0 - Rock, 1 - Paper, 2 - Scissors: ";
+		
+		while (true)
+		{
+			if (std::cin >> temp && temp >= 0 && temp <= 2) { return static_cast<Move>(temp); }
+			else { std::cout << "Incorrect input. Try again: "; }
+		}
 	}
 }
 

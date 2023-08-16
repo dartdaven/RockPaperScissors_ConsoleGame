@@ -9,6 +9,6 @@ public:
 	void start();
 
 private:
-	
+	int getWins4Victory();
 };
 

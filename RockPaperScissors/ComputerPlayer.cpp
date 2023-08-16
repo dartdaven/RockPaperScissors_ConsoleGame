@@ -16,3 +16,8 @@ Move ComputerPlayer::MakeMove(const Rules& rules)
 		return static_cast<Move>(std::rand() % 3);
 	}
 }
+
+std::string ComputerPlayer::getName()
+{
+	return "Computer";
+}
