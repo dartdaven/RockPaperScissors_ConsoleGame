@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GameRules.h"
-#include "Player.h"
+#include "BaseGameRules.h"
+#include "BasePlayer.h"
 
 class GameManager
 {

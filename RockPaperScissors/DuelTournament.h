@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Tournament.h"
+#include "BaseTournament.h"
 
-class DuelTournament : public Tournament
+class DuelTournament : public BaseTournament
 {
 public:
-	using Tournament::Tournament;
+	using BaseTournament::BaseTournament;
 	void Play() override;
 	void ShowRulesAndScore() override;
 };

@@ -1,95 +1,127 @@
 #include "EachVsEachTournament.h"
 
+#include <algorithm>
 #include <iostream>
-#include <unordered_map>
+#include <random>
+#include <vector>
 #include <windows.h>
-
-#include "enumMove.h"
-
 
 void EachVsEachTournament::Play()
 {
-    //TEMPORARY DON't KNOW HOW TO DEAL 
-    std::unordered_map<Move, std::string> movesToString
-    {
-        { Move::Rock, "Rock" },
-        { Move::Paper, "Paper" },
-        { Move::Scissors, "Scissors" },
-        { Move::Lizard, "Lizard" },
-        { Move::Spock, "Spock" }
-    };
+    //Random sorting but everyone will play with each other
+    std::vector<std::pair<int, int>> pairs;
+    pairs.reserve((players.size() * (players.size() - 1)) / 2);
 
-    //TO DO random sortin but everyone shoud play with each other
     for (int i = 0; i < players.size(); ++i)
     {
         for (int j = i + 1; j < players.size(); ++j)
         {
-
-            int winsOfFirst{ 0 }, winsOfSecond{ 0 };
-
-            while (winsOfFirst != wins4Victory && winsOfSecond != wins4Victory)
-            {
-                system("cls");
-                ShowRulesAndScore();
-
-                Move player1Result = players[i]->MakeMove(rules->rules());
-
-                system("cls");
-                ShowRulesAndScore();
-
-                Move player2Result = players[j]->MakeMove(rules->rules());
-
-                int tempResult = rules->determineWinner(player1Result, player2Result);
-
-                switch (tempResult)
-                {
-                case 1:
-                    std::cout << movesToString[player1Result] << " beats " << movesToString[player2Result] << std::endl;
-                    ++winsOfFirst;
-                    std::cout << players[i]->getName() << " won " << winsOfFirst << " of " << wins4Victory;
-                    Sleep(3000);
-                    break;
-                case 2:
-                    std::cout << movesToString[player2Result] << " beats " << movesToString[player1Result] << std::endl;
-                    ++winsOfSecond;
-                    std::cout << players[j]->getName() << " won " << winsOfSecond << " of " << wins4Victory;
-                    Sleep(3000);
-                    break;
-                default:
-                    std::cout << "It's the draw\n";
-                    Sleep(3000);
-                    break;
-                }
-            }
-
-            if (winsOfFirst == wins4Victory)
-            {
-                std::cout << std::endl << "So, " << players[i]->getName() << " is the winner of this Round\n";
-                players[i]->incrementScore();
-            }
-            else
-            {
-                std::cout << std::endl << "So, " << players[j]->getName() << " is the winner of this Round\n";
-                players[j]->incrementScore();
-            }
-            Sleep(3000);
+            pairs.push_back({i, j});
         }
     }
+    
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(0, 1);
 
-    std::cout << std::endl << "Here's the current standings of the tournament:\n";
-    for (const auto& player : players)
+    std::shuffle(pairs.begin(), pairs.end(), gen);
+
+    //Main cycle
+    for (auto& pair : pairs)
     {
-        std::cout << player->getName() << " : " << player->getScore() << ";\n";
+        if (dist(gen))
+        {
+            std::swap(pair.first, pair.second);
+        }
+        PlayRound(pair.first, pair.second);
     }
 
-    //TO DO if there's similar results
+    //After tournament has been played  
+    int maxScore = players[0]->getScore();
+    int maxScorerIndex{ 0 };
+    int maxScoresAmount{ 0 };
+
+    std::cout << "\nHere's the current standings of the tournament:\n";
+    
+    for (int i = 0; i < players.size(); ++i)
+    {
+        int tempScore = players[i]->getScore();
+        
+        std::cout << players[i]->getName() << " : " << tempScore << ";\n";
+        
+        if (tempScore > maxScore)
+        {
+            maxScore = tempScore;
+            maxScoresAmount = 1;
+            maxScorerIndex = i;
+        }
+        else if (tempScore == maxScore) { ++maxScoresAmount; }
+    }
+
+    if (maxScoresAmount == 1)
+    {
+        std::cout << "\nCongratulations to the " << players[maxScorerIndex]->getName() << ", the winner of the tournament\n";
+        std::cin.get();
+        return;
+    }
+
+    //if there are 2 highScorers
+    std::vector<int> indexesOfMaxScorers;
+    for (int i = 0; i < players.size(); ++i)
+    {
+        if (players[i]->getScore() == maxScore) { indexesOfMaxScorers.push_back(i); }
+    }
+
+    
+    if (maxScoresAmount == 2)
+    {
+        std::cout << "\nWe have 2 guys with high score, but only one can be the winner\n";
+        std::cout << "So it's the Duel then with rules of the tournament between " << players[indexesOfMaxScorers[0]]->getName() 
+            << " and " << players[indexesOfMaxScorers[1]]->getName() << "\n";
+        Sleep(5000);
+
+        PlayRound(indexesOfMaxScorers[0], indexesOfMaxScorers[1]);
+        
+        if (players[indexesOfMaxScorers[0]]->getScore() > players[indexesOfMaxScorers[1]]->getScore())
+        {
+            std::cout << "\nCongratulations to the " << players[indexesOfMaxScorers[0]]->getName()
+                << ", the winner of the tournament\n";
+            std::cin.get();
+            return;
+        }
+        else
+        {
+            std::cout << "\nCongratulations to the " << players[indexesOfMaxScorers[1]]->getName()
+                << ", the winner of the tournament\n";
+            std::cin.get();
+            return;
+        }
+
+        return;
+    }
+
+    //If there are more than two high scorer
+    else 
+    {
+        for (int i = (int)players.size() - 1; i >= 0; --i)
+        {
+            if (players[i]->getScore() != maxScore) { players.erase(players.begin() + i); }
+        }
+
+        std::cout << "\nCan't determine the winner\n";
+        for (const auto& player : players)
+        {
+            std::cout << player->getName() << ", ";
+        }
+        std::cout << "will play the tournament again till the winner will be determined\n";
+
+        //ask Alexey about recursion in this case
+        Play();
+    }
 }
 
 void EachVsEachTournament::ShowRulesAndScore()
 {
-    std::string temp;
-    if (rules->rules() == Rules::Classic) { temp = "Classic"; }
-    else { temp = "BigBangTheory"; }
-
-    std::cout << "Game mode - Each vs Each, Rules - " << temp << ", Wins for Victory - " << wins4Victory << "\n\n";
+    std::cout << "Game mode - Each vs Each, Rules - " << rulesToString(rules->getRules()) << ", Wins for Victory - " << wins4Victory << "\n";
+    std::cout << rules->stringOfPossibleMoves() << "\n\n";
 }

@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Player.h"
+#include "BasePlayer.h"
 
-class ComputerPlayer : public Player
+class ComputerPlayer : public BasePlayer
 {
 public:
-	Move MakeMove(const Rules& rules) override;
-	std::string getName() override;
+	int makeMove(const int& possibleMovesAmount) const override;
+	std::string getName() const override;
 };
 

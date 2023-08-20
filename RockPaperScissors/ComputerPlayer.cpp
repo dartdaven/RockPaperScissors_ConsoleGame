@@ -1,23 +1,16 @@
 #include "ComputerPlayer.h"
 
-#include <cstdlib>
-#include <ctime>
+#include <random>
 
-Move ComputerPlayer::MakeMove(const Rules& rules)
+int ComputerPlayer::makeMove(const int& possibleMovesAmount) const
 {
-	std::srand(static_cast<unsigned int>(std::time(nullptr)));
-
-	switch (rules)
-	{
-	case Rules::BigBang:
-		return static_cast<Move>(std::rand() % 5);
-	
-	default:
-		return static_cast<Move>(std::rand() % 3);
-	}
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<> dist(0, possibleMovesAmount - 1);
+	return dist(gen);
 }
 
-std::string ComputerPlayer::getName()
+std::string ComputerPlayer::getName() const
 {
 	return "Computer";
 }

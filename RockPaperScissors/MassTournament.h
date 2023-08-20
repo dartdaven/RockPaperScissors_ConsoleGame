@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Tournament.h"
+#include "BaseTournament.h"
 
-class MassTournament : public Tournament
+class MassTournament : public BaseTournament
 {
 };
 

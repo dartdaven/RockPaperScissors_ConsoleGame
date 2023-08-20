@@ -1,102 +1,102 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Files">
+      <UniqueIdentifier>{fef34863-20d4-4cbf-9962-704201638212}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Files\Players">
+      <UniqueIdentifier>{7ffc4415-d67e-42f0-955d-c21cca55175f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Files\Tournaments">
+      <UniqueIdentifier>{cdc3b1d4-1846-46fa-bef0-b6691dbc1ebc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Files\Rules">
+      <UniqueIdentifier>{44de9c1e-974a-4eef-8706-358733b32899}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="RockPaperScissors.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ClassicGameRules.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Enums.cpp">
+      <Filter>Files</Filter>
     </ClCompile>
     <ClCompile Include="GameManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Files</Filter>
     </ClCompile>
-    <ClCompile Include="BigBangGameRules.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="RockPaperScissors.cpp">
+      <Filter>Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BasePlayer.cpp">
+      <Filter>Files\Players</Filter>
     </ClCompile>
     <ClCompile Include="HumanPlayer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Files\Players</Filter>
     </ClCompile>
     <ClCompile Include="ComputerPlayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SingleTournament.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Files\Players</Filter>
     </ClCompile>
     <ClCompile Include="DuelTournament.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Files\Tournaments</Filter>
     </ClCompile>
     <ClCompile Include="EachVsEachTournament.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Files\Tournaments</Filter>
     </ClCompile>
     <ClCompile Include="MassTournament.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Files\Tournaments</Filter>
+    </ClCompile>
+    <ClCompile Include="BigBangGameRules.cpp">
+      <Filter>Files\Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="ClassicGameRules.cpp">
+      <Filter>Files\Rules</Filter>
     </ClCompile>
     <ClCompile Include="GridTournament.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Files\Tournaments</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="BaseTournament.cpp">
+      <Filter>Files\Tournaments</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseGameRules.cpp">
+      <Filter>Files\Rules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameRules.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ClassicGameRules.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Enums.h">
+      <Filter>Files</Filter>
     </ClInclude>
     <ClInclude Include="GameManager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Files</Filter>
     </ClInclude>
-    <ClInclude Include="BigBangGameRules.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="BasePlayer.h">
+      <Filter>Files\Players</Filter>
     </ClInclude>
     <ClInclude Include="HumanPlayer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Files\Players</Filter>
     </ClInclude>
     <ClInclude Include="ComputerPlayer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="enumRules.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="enumMove.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Tournament.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SingleTournament.h">
-      <Filter>Header Files</Filter>
+      <Filter>Files\Players</Filter>
     </ClInclude>
     <ClInclude Include="DuelTournament.h">
-      <Filter>Header Files</Filter>
+      <Filter>Files\Tournaments</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseTournament.h">
+      <Filter>Files\Tournaments</Filter>
     </ClInclude>
     <ClInclude Include="EachVsEachTournament.h">
-      <Filter>Header Files</Filter>
+      <Filter>Files\Tournaments</Filter>
     </ClInclude>
     <ClInclude Include="MassTournament.h">
-      <Filter>Header Files</Filter>
+      <Filter>Files\Tournaments</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseGameRules.h">
+      <Filter>Files\Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="BigBangGameRules.h">
+      <Filter>Files\Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassicGameRules.h">
+      <Filter>Files\Rules</Filter>
     </ClInclude>
     <ClInclude Include="GridTournament.h">
-      <Filter>Header Files</Filter>
+      <Filter>Files\Tournaments</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

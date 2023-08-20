@@ -10,16 +10,15 @@
 #include "BigBangGameRules.h"
 #include "HumanPlayer.h"
 #include "ComputerPlayer.h"
-#include "Tournament.h"
-#include "SingleTournament.h"
+#include "BaseTournament.h"
 #include "DuelTournament.h"
 #include "EachVsEachTournament.h"
 
-#include "enumMove.h"
+#include "Enums.h"
 
 void GameManager::start()
 {
-    std::unique_ptr<GameRules> selectedRules;
+    std::unique_ptr<BaseGameRules> selectedRules;
     
     //Chose the rules
     while (true)
@@ -48,7 +47,7 @@ void GameManager::start()
     }
 
     //ask Alexey if I can do it inside 
-    std::vector<std::unique_ptr<Player>> players;
+    std::vector<std::unique_ptr<BasePlayer>> players;
 
     //Choose the game mode
     while (true)
@@ -74,7 +73,7 @@ void GameManager::start()
             players.push_back(std::make_unique<HumanPlayer>());
             players.push_back(std::make_unique<ComputerPlayer>());
 
-            std::unique_ptr<Tournament> tournament = std::make_unique<SingleTournament>(std::move(players), std::move(selectedRules));
+            std::unique_ptr<BaseTournament> tournament = std::make_unique<DuelTournament>(std::move(players), std::move(selectedRules));
             tournament->Play();
             
             break;
@@ -101,7 +100,7 @@ void GameManager::start()
             if (input.empty()) { players.push_back(std::make_unique<HumanPlayer>("Player 2")); }
             else { players.push_back(std::make_unique<HumanPlayer>(input)); }
 
-            std::unique_ptr<Tournament> tournament = std::make_unique<DuelTournament>(std::move(players), std::move(selectedRules));
+            std::unique_ptr<BaseTournament> tournament = std::make_unique<DuelTournament>(std::move(players), std::move(selectedRules));
             tournament->Play();
 
             break;
@@ -128,6 +127,8 @@ void GameManager::start()
             {
                 int wins4Victory = getWins4Victory();
 
+                players.reserve(playersAmount);
+
                 for (int i = 0; i < playersAmount; ++i)
                 {
                     //TO DO ask players name
@@ -138,7 +139,7 @@ void GameManager::start()
                     players.push_back(std::make_unique<HumanPlayer>(oss.str()));
                 }
 
-                std::unique_ptr<Tournament> tournament = std::make_unique<EachVsEachTournament>(std::move(players), std::move(selectedRules), wins4Victory);
+                std::unique_ptr<BaseTournament> tournament = std::make_unique<EachVsEachTournament>(std::move(players), std::move(selectedRules), wins4Victory);
                 tournament->Play();
                 break;
             }

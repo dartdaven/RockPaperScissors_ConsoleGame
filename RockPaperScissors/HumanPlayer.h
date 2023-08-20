@@ -2,16 +2,15 @@
 
 #include <string>
 
-#include "Player.h"
+#include "BasePlayer.h"
 
-class HumanPlayer : public Player
+class HumanPlayer : public BasePlayer
 {
 public:
-	HumanPlayer(const std::string& name) : name(name) {}
-	HumanPlayer() : name("Player") {}
+	HumanPlayer(const std::string& name = "Player") : name(name) {}
 
-	Move MakeMove(const Rules& rules) override;
-	std::string getName() override;
+	int makeMove(const int& possibleMovesAmount) const override;
+	std::string getName() const override;
 
 private:
 	std::string name;

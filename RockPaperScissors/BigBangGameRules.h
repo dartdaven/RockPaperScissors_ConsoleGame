@@ -1,11 +1,13 @@
 #pragma once
 
-#include "GameRules.h"
+#include "BaseGameRules.h"
 
-class BigBangGameRules : public GameRules
+class BigBangGameRules : public BaseGameRules
 {
 public:
-	int determineWinner(Move first, Move second) override;
-	Rules rules() override;
+	BigBangGameRules();
+
+	int determineWinner(const int& first, const int& second) const override;
+	Rules getRules() const override;
 };
 

@@ -1,22 +1,34 @@
 #include "ClassicGameRules.h"
 
-int ClassicGameRules::determineWinner(Move first, Move second)
+#include <iostream>
+
+ClassicGameRules::ClassicGameRules()
 {
+    possibleMoves = std::vector<Move>{ Move::Rock, Move::Paper, Move::Scissors };
+}
+
+int ClassicGameRules::determineWinner(const int& first, const int& second) const
+{
+    Move player1Move = possibleMoves[first];
+    Move player2Move = possibleMoves[second];
+
     if (first == second) { return 0; }
-    
-    switch (first)
+
+    switch (player1Move)
     {
     case Move::Rock:
-        return (second == Move::Paper) ? 2 : 1;
+        return (player2Move == Move::Paper) ? 2 : 1;
     case Move::Paper:
-        return (second == Move::Scissors) ? 2 : 1;
+        return (player2Move == Move::Scissors) ? 2 : 1;
+    case Move::Scissors:
+        return (player2Move == Move::Rock) ? 2 : 1;
     default:
-        return (second == Move::Rock) ? 2 : 1;
+        std::cerr << "Something's wrong with the passed move, this round will not be counted\n";
+        return 0;
     }
 }
 
-Rules ClassicGameRules::rules()
+Rules ClassicGameRules::getRules() const
 {
     return Rules::Classic;
 }
-

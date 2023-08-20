@@ -1,35 +1,25 @@
 #include "HumanPlayer.h"
 
 #include <iostream>
+#include <limits>
 
-Move HumanPlayer::MakeMove(const Rules& rules)
+int HumanPlayer::makeMove(const int& possibleMovesAmount) const
 {
 	int temp;
-
-	switch (rules)
-	{
-
-	case Rules::BigBang:
-		std::cout << name << ", please make your move. 0 - Rock, 1 - Paper, 2 - Scissors, 3 - Lizard, 4 - Spock: ";
-
-		while (true)
-        {
-			if (std::cin >> temp && temp >= 0 && temp <= 4) { return static_cast<Move>(temp); }
-            else { std::cout << "Incorrect input. Try again: "; }
-        } 
-	
-	default:
-		std::cout << name << ", please make your move. 0 - Rock, 1 - Paper, 2 - Scissors: ";
-		
-		while (true)
-		{
-			if (std::cin >> temp && temp >= 0 && temp <= 2) { return static_cast<Move>(temp); }
-			else { std::cout << "Incorrect input. Try again: "; }
-		}
-	}
+    
+    while (true)
+    {
+        if (std::cin >> temp && temp >= 0 && temp < possibleMovesAmount) { return temp; }
+        else
+        { 
+            std::cout << "Incorrect input. Try again: ";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    }
 }
 
-std::string HumanPlayer::getName()
+std::string HumanPlayer::getName() const
 {
     return name;
 }
