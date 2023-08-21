@@ -13,6 +13,7 @@
 #include "BaseTournament.h"
 #include "DuelTournament.h"
 #include "EachVsEachTournament.h"
+#include "MassTournament.h"
 
 #include "Enums.h"
 
@@ -135,11 +136,29 @@ void GameManager::start()
                     std::ostringstream oss;
                     oss << "Player " << i + 1;
 
-                    //to know why is he complaining
                     players.push_back(std::make_unique<HumanPlayer>(oss.str()));
                 }
 
                 std::unique_ptr<BaseTournament> tournament = std::make_unique<EachVsEachTournament>(std::move(players), std::move(selectedRules), wins4Victory);
+                tournament->Play();
+                break;
+            }
+            
+            //Massive
+            if (tempTournament == 2)
+            {
+                players.reserve(playersAmount);
+
+                for (int i = 0; i < playersAmount; ++i)
+                {
+                    //TO DO ask players name
+                    std::ostringstream oss;
+                    oss << "Player " << i + 1;
+
+                    players.push_back(std::make_unique<HumanPlayer>(oss.str()));
+                }
+
+                std::unique_ptr<BaseTournament> tournament = std::make_unique<MassTournament>(std::move(players), std::move(selectedRules));
                 tournament->Play();
                 break;
             }

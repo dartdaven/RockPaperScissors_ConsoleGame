@@ -11,6 +11,7 @@ class BaseTournament
 public:
 	BaseTournament(std::vector<std::unique_ptr<BasePlayer>> players, std::unique_ptr<BaseGameRules> rules, const int& wins4Victory = 1)
 		: players(std::move(players)), rules(std::move(rules)), wins4Victory(wins4Victory) {}
+	virtual ~BaseTournament() {}
 	
 	virtual void Play() = 0;
 	virtual void ShowRulesAndScore() = 0;

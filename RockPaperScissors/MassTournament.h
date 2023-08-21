@@ -4,5 +4,9 @@
 
 class MassTournament : public BaseTournament
 {
+	using BaseTournament::BaseTournament;
+	void Play() override;
+	void ShowRulesAndScore() override;
+	void PlayMassRound();
 };
 

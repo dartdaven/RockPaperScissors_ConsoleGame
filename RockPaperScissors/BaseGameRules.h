@@ -9,6 +9,7 @@ class BaseGameRules
 {
 public:
 	virtual ~BaseGameRules() {};
+
 	virtual int determineWinner(const int& first, const int& second) const = 0;
 	virtual Rules getRules() const = 0;
 	virtual int getAmountOfMoves() const;
