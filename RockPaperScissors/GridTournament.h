@@ -2,7 +2,17 @@
 
 #include "BaseTournament.h"
 
+
+
 class GridTournament : public BaseTournament
 {
+public:
+	using BaseTournament::BaseTournament;
+	void Play() override;
+	void ShowRulesAndScore() override;
+private: 
+	void ShowGrid();
+	std::vector<std::string> gridCells;
+	void writeToCell(const int& cellNumber, const std::string& whatToWrite);
 };
 

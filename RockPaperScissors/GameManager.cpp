@@ -14,6 +14,7 @@
 #include "DuelTournament.h"
 #include "EachVsEachTournament.h"
 #include "MassTournament.h"
+#include "GridTournament.h"
 
 #include "Enums.h"
 
@@ -159,6 +160,38 @@ void GameManager::start()
                 }
 
                 std::unique_ptr<BaseTournament> tournament = std::make_unique<MassTournament>(std::move(players), std::move(selectedRules));
+                tournament->Play();
+                break;
+            }
+
+            //Grid
+            if (tempTournament == 3)
+            {
+                int wins4Victory = getWins4Victory();
+
+                players.reserve(playersAmount);
+
+                for (int i = 0; i < playersAmount; ++i)
+                {
+                    //TO DO ask players name
+                    std::ostringstream oss;
+                    oss << "Player " << i + 1;
+
+                    players.push_back(std::make_unique<HumanPlayer>(oss.str()));
+                }
+
+                //TO DO normal
+                if (playersAmount < 8)
+                {
+                    int compAmount = 8 - playersAmount;
+
+                    for (int i = 0; i < compAmount; ++i)
+                    {
+                        players.push_back(std::make_unique<ComputerPlayer>());
+                    }
+                }
+
+                std::unique_ptr<BaseTournament> tournament = std::make_unique<GridTournament>(std::move(players), std::move(selectedRules), wins4Victory);
                 tournament->Play();
                 break;
             }
