@@ -13,11 +13,11 @@
     <Filter Include="Files\Rules">
       <UniqueIdentifier>{44de9c1e-974a-4eef-8706-358733b32899}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Files\TournamentUI">
+      <UniqueIdentifier>{2c02d439-3db0-43bf-b984-4ae9cd32628a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Enums.cpp">
-      <Filter>Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameManager.cpp">
       <Filter>Files</Filter>
     </ClCompile>
@@ -56,6 +56,18 @@
     </ClCompile>
     <ClCompile Include="BaseGameRules.cpp">
       <Filter>Files\Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseTournamentUI.cpp">
+      <Filter>Files\TournamentUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneralUI.cpp">
+      <Filter>Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EachVsEachTournamentUI.cpp">
+      <Filter>Files\TournamentUI</Filter>
+    </ClCompile>
+    <ClCompile Include="DuelTournamentUI.cpp">
+      <Filter>Files\TournamentUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +109,18 @@
     </ClInclude>
     <ClInclude Include="GridTournament.h">
       <Filter>Files\Tournaments</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseTournamentUI.h">
+      <Filter>Files\TournamentUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralUI.h">
+      <Filter>Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EachVsEachTournamentUI.h">
+      <Filter>Files\TournamentUI</Filter>
+    </ClInclude>
+    <ClInclude Include="DuelTournamentUI.h">
+      <Filter>Files\TournamentUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

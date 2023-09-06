@@ -5,7 +5,8 @@
 class ComputerPlayer : public BasePlayer
 {
 public:
-	int makeMove(const int& possibleMovesAmount) const override;
+	Move makeMove(const std::unique_ptr<BaseGameRules>& rules) const override;
 	std::string getName() const override;
+	bool isBot() const override;
 };
 

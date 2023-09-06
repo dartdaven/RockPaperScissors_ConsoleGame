@@ -5,19 +5,18 @@
 
 #include "Enums.h"
 
+enum class Rules { Classic, BigBang };
+
 class BaseGameRules
 {
 public:
 	virtual ~BaseGameRules() {};
 
 	//0 - Draw, 1 - First is the winner, 2 - Second is the winner 
-	virtual int determineWinner(const int& first, const int& second) const = 0;
+	virtual int determineWinner(const std::pair<Move, Move>& pairOfMoves) const = 0;
 	
 	virtual Rules getRules() const = 0;
-
-	virtual int getAmountOfMoves() const;
-	virtual std::string stringOfPossibleMoves() const;
-	virtual Move getMove(const int& integer) const;
+	const std::vector<Move>& getPossibleMoves() const;
 
 protected:
 	std::vector<Move> possibleMoves;

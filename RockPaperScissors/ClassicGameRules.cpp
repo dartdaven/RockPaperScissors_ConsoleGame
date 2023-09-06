@@ -7,21 +7,18 @@ ClassicGameRules::ClassicGameRules()
     possibleMoves = std::vector<Move>{ Move::Rock, Move::Paper, Move::Scissors };
 }
 
-int ClassicGameRules::determineWinner(const int& first, const int& second) const
+int ClassicGameRules::determineWinner(const std::pair<Move, Move>& pairOfMoves) const
 {
-    Move player1Move = possibleMoves[first];
-    Move player2Move = possibleMoves[second];
+    if (pairOfMoves.first == pairOfMoves.second) { return 0; }
 
-    if (first == second) { return 0; }
-
-    switch (player1Move)
+    switch (pairOfMoves.first)
     {
     case Move::Rock:
-        return (player2Move == Move::Paper) ? 2 : 1;
+        return (pairOfMoves.second == Move::Paper) ? 2 : 1;
     case Move::Paper:
-        return (player2Move == Move::Scissors) ? 2 : 1;
+        return (pairOfMoves.second == Move::Scissors) ? 2 : 1;
     case Move::Scissors:
-        return (player2Move == Move::Rock) ? 2 : 1;
+        return (pairOfMoves.second == Move::Rock) ? 2 : 1;
     default:
         std::cerr << "Something's wrong with the passed move, this round will not be counted\n";
         return 0;

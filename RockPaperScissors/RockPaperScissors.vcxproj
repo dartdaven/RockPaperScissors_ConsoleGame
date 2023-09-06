@@ -129,13 +129,16 @@
   <ItemGroup>
     <ClCompile Include="BaseGameRules.cpp" />
     <ClCompile Include="BaseTournament.cpp" />
+    <ClCompile Include="BaseTournamentUI.cpp" />
     <ClCompile Include="BigBangGameRules.cpp" />
     <ClCompile Include="ClassicGameRules.cpp" />
     <ClCompile Include="ComputerPlayer.cpp" />
     <ClCompile Include="DuelTournament.cpp" />
+    <ClCompile Include="DuelTournamentUI.cpp" />
     <ClCompile Include="EachVsEachTournament.cpp" />
-    <ClCompile Include="Enums.cpp" />
+    <ClCompile Include="EachVsEachTournamentUI.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GeneralUI.cpp" />
     <ClCompile Include="GridTournament.cpp" />
     <ClCompile Include="HumanPlayer.cpp" />
     <ClCompile Include="MassTournament.cpp" />
@@ -143,14 +146,18 @@
     <ClCompile Include="RockPaperScissors.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseTournamentUI.h" />
     <ClInclude Include="BigBangGameRules.h" />
     <ClInclude Include="ClassicGameRules.h" />
     <ClInclude Include="ComputerPlayer.h" />
     <ClInclude Include="DuelTournament.h" />
+    <ClInclude Include="DuelTournamentUI.h" />
     <ClInclude Include="EachVsEachTournament.h" />
+    <ClInclude Include="EachVsEachTournamentUI.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="BaseGameRules.h" />
+    <ClInclude Include="GeneralUI.h" />
     <ClInclude Include="GridTournament.h" />
     <ClInclude Include="HumanPlayer.h" />
     <ClInclude Include="MassTournament.h" />

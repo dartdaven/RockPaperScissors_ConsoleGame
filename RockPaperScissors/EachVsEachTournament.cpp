@@ -9,119 +9,78 @@
 void EachVsEachTournament::Play()
 {
     //Random sorting but everyone will play with each other
-    std::vector<std::pair<int, int>> pairs;
-    pairs.reserve((players.size() * (players.size() - 1)) / 2);
+    std::vector<PairOfPlayersSignature> pairsOfPlayers;
+    pairsOfPlayers.reserve((players.size() * (players.size() - 1)) / 2);
 
     for (int i = 0; i < players.size(); ++i)
     {
         for (int j = i + 1; j < players.size(); ++j)
         {
-            pairs.push_back({i, j});
+            pairsOfPlayers.push_back({ players[i], players[j] });
         }
     }
-    
+
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dist(0, 1);
 
-    std::shuffle(pairs.begin(), pairs.end(), gen);
+    std::shuffle(pairsOfPlayers.begin(), pairsOfPlayers.end(), gen);
 
     //Main cycle
-    for (auto& pair : pairs)
+    for (auto& pair : pairsOfPlayers)
     {
         if (dist(gen))
         {
             std::swap(pair.first, pair.second);
         }
-        PlayRound(pair.first, pair.second);
+        mPairOfPlayers = &pair;
+        PlayRound(pair);
     }
 
     //After tournament has been played  
-    int maxScore = players[0]->getScore();
-    int maxScorerIndex{ 0 };
-    int maxScoresAmount{ 0 };
+    tournamentEventCallback(Event::AllPlayersMadeMoves);
 
-    std::cout << "\nHere's the current standings of the tournament:\n";
-    
+    int maxScore = players[0]->getScore();
     for (int i = 0; i < players.size(); ++i)
     {
-        int tempScore = players[i]->getScore();
-        
-        std::cout << players[i]->getName() << " : " << tempScore << ";\n";
-        
-        if (tempScore > maxScore)
-        {
-            maxScore = tempScore;
-            maxScoresAmount = 1;
-            maxScorerIndex = i;
-        }
-        else if (tempScore == maxScore) { ++maxScoresAmount; }
+        if (players[i]->getScore() > maxScore) { maxScore = players[i]->getScore(); }
     }
 
-    if (maxScoresAmount == 1)
+    for (int i = static_cast<int>(players.size()) - 1; i >= 0; --i)
     {
-        std::cout << "\nCongratulations to the " << players[maxScorerIndex]->getName() << ", the winner of the tournament\n";
-        std::cin.get();
+        if (players[i]->getScore() != maxScore) { players.erase(players.begin() + i); }
+    }
+
+    //if there is 1 highScorer 
+    if (players.size() == 1)
+    {
+        tournamentEventCallback(Event::TournamentEnded);
         return;
     }
 
     //if there are 2 highScorers
-    std::vector<int> indexesOfMaxScorers;
-    for (int i = 0; i < players.size(); ++i)
+    if (players.size() == 2)
     {
-        if (players[i]->getScore() == maxScore) { indexesOfMaxScorers.push_back(i); }
-    }
+        PairOfPlayersSignature pairOfMaxScorers(players[0], players[1]);
+        mPairOfPlayers = &pairOfMaxScorers;
+        tournamentEventCallback(Event::TwoHighScorers);
 
-    
-    if (maxScoresAmount == 2)
-    {
-        std::cout << "\nWe have 2 guys with high score, but only one can be the winner\n";
-        std::cout << "So it's the Duel then with rules of the tournament between " << players[indexesOfMaxScorers[0]]->getName() 
-            << " and " << players[indexesOfMaxScorers[1]]->getName() << "\n";
-        Sleep(5000);
+        PlayRound(pairOfMaxScorers);
 
-        PlayRound(indexesOfMaxScorers[0], indexesOfMaxScorers[1]);
-        
-        if (players[indexesOfMaxScorers[0]]->getScore() > players[indexesOfMaxScorers[1]]->getScore())
+        if (pairOfMaxScorers.first->getScore() > pairOfMaxScorers.second->getScore())
         {
-            std::cout << "\nCongratulations to the " << players[indexesOfMaxScorers[0]]->getName()
-                << ", the winner of the tournament\n";
-            std::cin.get();
-            return;
+            players.erase(players.end());
         }
-        else
-        {
-            std::cout << "\nCongratulations to the " << players[indexesOfMaxScorers[1]]->getName()
-                << ", the winner of the tournament\n";
-            std::cin.get();
-            return;
-        }
+        else { players.erase(players.begin()); }
 
+        tournamentEventCallback(Event::TournamentEnded);
         return;
     }
 
     //If there are more than two high scorer
-    else 
+    else
     {
-        for (int i = static_cast<int>(players.size()) - 1; i >= 0; --i)
-        {
-            if (players[i]->getScore() != maxScore) { players.erase(players.begin() + i); }
-        }
-
-        std::cout << "\nCan't determine the winner\n";
-        for (const auto& player : players)
-        {
-            std::cout << player->getName() << ", ";
-        }
-        std::cout << "will play the tournament again till the winner will be determined\n";
-
-        //ask Alexey about recursion in this case
+        tournamentEventCallback(Event::CantDetermineTheWinner);
         Play();
     }
-}
-
-void EachVsEachTournament::ShowRulesAndScore()
-{
-    std::cout << "Game mode - Each vs Each, Rules - " << rulesToString(rules->getRules()) << ", Wins for Victory - " << wins4Victory << "\n";
-    std::cout << rules->stringOfPossibleMoves() << "\n\n";
 }

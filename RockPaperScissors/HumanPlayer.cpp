@@ -3,18 +3,22 @@
 #include <iostream>
 #include <limits>
 
-int HumanPlayer::makeMove(const int& possibleMovesAmount) const
+#include "GeneralUI.h"
+
+Move HumanPlayer::makeMove(const std::unique_ptr<BaseGameRules>& rules) const
 {
 	int temp;
+
+    std::cout << this->getName() << ", please make your move: ";
     
     while (true)
     {
-        if (std::cin >> temp && temp >= 0 && temp < possibleMovesAmount) { return temp; }
+        if (std::cin >> temp && temp >= 0 && temp < rules->getPossibleMoves().size()) { 
+            return rules->getPossibleMoves()[temp];
+        }
         else
         { 
-            std::cout << "Incorrect input. Try again: ";
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            GeneralUI::incorrectInput();
         }
     }
 }
@@ -22,4 +26,9 @@ int HumanPlayer::makeMove(const int& possibleMovesAmount) const
 std::string HumanPlayer::getName() const
 {
     return name;
+}
+
+bool HumanPlayer::isBot() const
+{
+    return false;
 }

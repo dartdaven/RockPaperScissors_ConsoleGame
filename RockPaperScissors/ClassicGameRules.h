@@ -7,7 +7,7 @@ class ClassicGameRules : public BaseGameRules
 public:
 	ClassicGameRules();
 
-	int determineWinner(const int& first, const int& second) const override;
+	int determineWinner(const std::pair<Move, Move>& pairOfMoves) const override;
 	Rules getRules() const override;
 };
 
