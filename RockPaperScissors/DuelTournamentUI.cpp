@@ -13,8 +13,8 @@ void DuelTournamentUI::showRules() const
 
 void DuelTournamentUI::showScore() const
 {
-	std::pair< std::unique_ptr<BasePlayer>&, std::unique_ptr<BasePlayer>& >* PairOfPlayers = tournament->getPairOfPlayers();
+	std::pair< std::shared_ptr<BasePlayer>, std::shared_ptr<BasePlayer>> pairOfRoundPlayers = tournament->getPairOfRoundPlayers();
 
-	std::cout << (*PairOfPlayers).first->getName() << "'s score - " << (*PairOfPlayers).first->getScore()
-		<< "     " << (*PairOfPlayers).second->getName() << "'s score - " << (*PairOfPlayers).second->getScore() << "\n\n";
+	std::cout << pairOfRoundPlayers.first->getName() << "'s score - " << pairOfRoundPlayers.first->getScore()
+		<< "     " << pairOfRoundPlayers.second->getName() << "'s score - " << pairOfRoundPlayers.second->getScore() << "\n\n";
 }

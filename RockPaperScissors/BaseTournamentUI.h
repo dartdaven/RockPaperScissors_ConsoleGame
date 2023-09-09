@@ -12,13 +12,12 @@ class BaseTournamentUI
 public:
 	BaseTournamentUI(std::unique_ptr<BaseTournament>& tournament) : tournament(tournament)
 	{
-		tournament->setRoundEventCallback(std::bind(&BaseTournamentUI::onRoundEvent, this, std::placeholders::_1));
-		tournament->setTournamentEventCallback(std::bind(&BaseTournamentUI::onTournamentEvent, this, std::placeholders::_1));
+		tournament->setEventCallback(std::bind(&BaseTournamentUI::onEvent, this, std::placeholders::_1));
 	}
 	virtual ~BaseTournamentUI() {};
 
-	virtual void onRoundEvent(const Event& event) const;
-	virtual void onTournamentEvent(const Event& event) const = 0;
+	//true if the Event has been processed
+	virtual bool onEvent(const Event& event) const;
 
 	//general funcs
 	virtual void showRules() const = 0;

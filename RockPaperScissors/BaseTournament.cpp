@@ -8,51 +8,51 @@
 
 #include "BasePlayer.h"
 
-void BaseTournament::PlayRound(PairOfPlayersSignature pairOfPlayers)
+void BaseTournament::PlayRound()
 {
-    if (!roundEventCallback) { assert(false); }
-    mPairOfPlayers = &pairOfPlayers;
+    assert(mEventCallback);
+    assert(mPairOfRoundPlayers.first || mPairOfRoundPlayers.second);
 
-    while (pairOfPlayers.first->getWins() != wins4Victory && pairOfPlayers.second->getWins() != wins4Victory)
+    while (mPairOfRoundPlayers.first->getWins() != mWins4Victory && mPairOfRoundPlayers.second->getWins() != mWins4Victory)
     {
-        roundEventCallback(Event::RoundStarted);
+        mEventCallback(Event::RoundStarted);
 
-        Move firstMove = pairOfPlayers.first->makeMove(rules);
-        roundEventCallback(Event::PlayerMadeMove);
+        Move firstMove = mPairOfRoundPlayers.first->makeMove(mRules);
+        mEventCallback(Event::PlayerMadeMove);
 
-        Move secondMove = pairOfPlayers.second->makeMove(rules);
-        roundEventCallback(Event::PlayerMadeMove);
+        Move secondMove = mPairOfRoundPlayers.second->makeMove(mRules);
+        mEventCallback(Event::PlayerMadeMove);
 
-        mPairOfMoves = std::pair<Move, Move>(firstMove, secondMove);
+        mPairOfRoundMoves = std::pair<Move, Move>(firstMove, secondMove);
 
-        int tempResult = rules->determineWinner(mPairOfMoves);
+        int tempResult = mRules->determineWinner(mPairOfRoundMoves);
         
         switch (tempResult)
         {
         case 1:
-            pairOfPlayers.first->incrementWins();
+            mPairOfRoundPlayers.first->incrementWins();
             break;
 
         case 2:
-            pairOfPlayers.second->incrementWins();
+            mPairOfRoundPlayers.second->incrementWins();
             break;
 
         default: break;
         }
 
-        roundEventCallback(Event::AllPlayersMadeMoves);
+        mEventCallback(Event::AllPlayersMadeMoves);
     }
     
-    roundEventCallback(Event::RoundEnded);
+    mEventCallback(Event::RoundEnded);
 
-    if (pairOfPlayers.first->getWins() == wins4Victory)
+    if (mPairOfRoundPlayers.first->getWins() == mWins4Victory)
     {
-        pairOfPlayers.first->incrementScore();
-        pairOfPlayers.first->resetWins();
+        mPairOfRoundPlayers.first->incrementScore();
+        mPairOfRoundPlayers.first->resetWins();
     }
     else
     {
-        pairOfPlayers.second->incrementScore();
-        pairOfPlayers.second->resetWins();
+        mPairOfRoundPlayers.second->incrementScore();
+        mPairOfRoundPlayers.second->resetWins();
     }
 }

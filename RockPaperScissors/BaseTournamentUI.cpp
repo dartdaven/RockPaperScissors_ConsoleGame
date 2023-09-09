@@ -4,6 +4,7 @@
 #include <Windows.h>
 
 #include "GeneralUI.h"
+#include "BaseTournament.h"
 
 //for confetti
 #include <thread>
@@ -11,10 +12,9 @@
 #include <cstdlib>
 #include <conio.h>
 
-
-void BaseTournamentUI::onRoundEvent(const Event& event) const
+bool BaseTournamentUI::onEvent(const Event& event) const
 {
-    std::pair< std::unique_ptr<BasePlayer>&, std::unique_ptr<BasePlayer>& >* PairOfPlayers = tournament->getPairOfPlayers();
+    std::pair< std::shared_ptr<BasePlayer>, std::shared_ptr<BasePlayer>> pairOfRoundPlayers = tournament->getPairOfRoundPlayers();
     
     switch (event)
     {
@@ -22,13 +22,13 @@ void BaseTournamentUI::onRoundEvent(const Event& event) const
         GeneralUI::clearConsoleSmoothly();
         showRules();
         showScore();
-        break;
+        return true;
 
     case Event::PlayerMadeMove:
         GeneralUI::clearConsoleSmoothly();
         showRules();
         showScore();
-        break;
+        return true;
 
     case Event::AllPlayersMadeMoves:
         GeneralUI::clearConsoleSmoothly();
@@ -36,10 +36,10 @@ void BaseTournamentUI::onRoundEvent(const Event& event) const
         showScore();
 
         {
-            std::pair<Move, Move> pairOfMoves = tournament->getPairOfMoves();
+            std::pair<Move, Move> pairOfMoves = tournament->getPairOfRoundMoves();
 
-            std::cout << (*PairOfPlayers).first->getName() << " chose " << moveToString(pairOfMoves.first) << "     "
-                << (*PairOfPlayers).second->getName() << " chose " << moveToString(pairOfMoves.second) << "\n\n";
+            std::cout << pairOfRoundPlayers.first->getName() << " chose " << moveToString(pairOfMoves.first) << "     "
+                << pairOfRoundPlayers.second->getName() << " chose " << moveToString(pairOfMoves.second) << "\n\n";
             Sleep(2000);
 
             int tempResult = tournament->getRules()->determineWinner(pairOfMoves);
@@ -51,7 +51,7 @@ void BaseTournamentUI::onRoundEvent(const Event& event) const
 
                 if (tournament->getWins4Victory() > 1)
                 {
-                    std::cout << (*PairOfPlayers).first->getName() << " won " << (*PairOfPlayers).first->getWins() << " of " << tournament->getWins4Victory() << std::endl;
+                    std::cout << pairOfRoundPlayers.first->getName() << " won " << pairOfRoundPlayers.first->getWins() << " of " << tournament->getWins4Victory() << std::endl;
                 }
                 Sleep(3000);
                 break;
@@ -61,7 +61,7 @@ void BaseTournamentUI::onRoundEvent(const Event& event) const
 
                 if (tournament->getWins4Victory() > 1)
                 {
-                    std::cout << (*PairOfPlayers).second->getName() << " won " << (*PairOfPlayers).second->getWins() << " of " << tournament->getWins4Victory() << std::endl;
+                    std::cout << pairOfRoundPlayers.second->getName() << " won " << pairOfRoundPlayers.second->getWins() << " of " << tournament->getWins4Victory() << std::endl;
                 }
                 Sleep(3000);
                 break;
@@ -73,23 +73,25 @@ void BaseTournamentUI::onRoundEvent(const Event& event) const
             }
         }
 
-        break;
+        return true;
 
     case Event::RoundEnded:
 
-        if ((*PairOfPlayers).first->getWins() == tournament->getWins4Victory())
+        if (pairOfRoundPlayers.first->getWins() == tournament->getWins4Victory())
         {
-            std::cout << (*PairOfPlayers).first->getName() << " is the winner of the round\n";
+            std::cout << pairOfRoundPlayers.first->getName() << " is the winner of the round\n";
             Sleep(3000);
         }
         else
         {
-            std::cout << (*PairOfPlayers).second->getName() << " is the winner of the round\n";
+            std::cout << pairOfRoundPlayers.second->getName() << " is the winner of the round\n";
             Sleep(3000);
         }
 
-        break;
+        return true;
     }
+
+    return false;
 }
 
 std::string BaseTournamentUI::rulesToString(const Rules& rules) const
@@ -137,6 +139,7 @@ std::string BaseTournamentUI::stringOfPossibleMoves(const std::vector<Move>& pos
     return oss.str();
 }
 
+//not mine
 void BaseTournamentUI::winnerOfTheTournament(const std::string& name) const
 {
     int consoleWidth = 80; // Adjust this value based on your console width

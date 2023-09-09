@@ -8,15 +8,15 @@
 
 void EachVsEachTournament::Play()
 {
-    //Random sorting but everyone will play with each other
+    //Random sorting, but everyone will play with each other
     std::vector<PairOfPlayersSignature> pairsOfPlayers;
-    pairsOfPlayers.reserve((players.size() * (players.size() - 1)) / 2);
+    pairsOfPlayers.reserve((mPlayers.size() * (mPlayers.size() - 1)) / 2);
 
-    for (int i = 0; i < players.size(); ++i)
+    for (int i = 0; i < mPlayers.size(); ++i)
     {
-        for (int j = i + 1; j < players.size(); ++j)
+        for (int j = i + 1; j < mPlayers.size(); ++j)
         {
-            pairsOfPlayers.push_back({ players[i], players[j] });
+            pairsOfPlayers.push_back({ mPlayers[i], mPlayers[j] });
         }
     }
 
@@ -33,54 +33,55 @@ void EachVsEachTournament::Play()
         {
             std::swap(pair.first, pair.second);
         }
-        mPairOfPlayers = &pair;
-        PlayRound(pair);
+        mPairOfRoundPlayers = pair;
+        PlayRound();
     }
+
 
     //After tournament has been played  
-    tournamentEventCallback(Event::AllPlayersMadeMoves);
+    mEventCallback(Event::MainCycleEnded);
 
-    int maxScore = players[0]->getScore();
-    for (int i = 0; i < players.size(); ++i)
+    int maxScore = mPlayers[0]->getScore();
+    for (int i = 0; i < mPlayers.size(); ++i)
     {
-        if (players[i]->getScore() > maxScore) { maxScore = players[i]->getScore(); }
+        if (mPlayers[i]->getScore() > maxScore) { maxScore = mPlayers[i]->getScore(); }
     }
 
-    for (int i = static_cast<int>(players.size()) - 1; i >= 0; --i)
+    for (int i = static_cast<int>(mPlayers.size()) - 1; i >= 0; --i)
     {
-        if (players[i]->getScore() != maxScore) { players.erase(players.begin() + i); }
+        if (mPlayers[i]->getScore() != maxScore) { mPlayers.erase(mPlayers.begin() + i); }
     }
 
     //if there is 1 highScorer 
-    if (players.size() == 1)
+    if (mPlayers.size() == 1)
     {
-        tournamentEventCallback(Event::TournamentEnded);
+        mEventCallback(Event::TournamentEnded);
         return;
     }
 
     //if there are 2 highScorers
-    if (players.size() == 2)
+    if (mPlayers.size() == 2)
     {
-        PairOfPlayersSignature pairOfMaxScorers(players[0], players[1]);
-        mPairOfPlayers = &pairOfMaxScorers;
-        tournamentEventCallback(Event::TwoHighScorers);
+        PairOfPlayersSignature pairOfMaxScorers(mPlayers[0], mPlayers[1]);
+        mPairOfRoundPlayers = pairOfMaxScorers;
+        mEventCallback(Event::TwoHighScorers);
 
-        PlayRound(pairOfMaxScorers);
+        PlayRound();
 
         if (pairOfMaxScorers.first->getScore() > pairOfMaxScorers.second->getScore())
         {
-            players.erase(players.end());
+            mPlayers.erase(mPlayers.end());
         }
-        else { players.erase(players.begin()); }
+        else { mPlayers.erase(mPlayers.begin()); }
 
-        tournamentEventCallback(Event::TournamentEnded);
+        mEventCallback(Event::TournamentEnded);
         return;
     }
 
     //If there are more than two high scorer
     else
     {
-        tournamentEventCallback(Event::CantDetermineTheWinner);
+        mEventCallback(Event::CantDetermineTheWinner);
         Play();
     }
 }

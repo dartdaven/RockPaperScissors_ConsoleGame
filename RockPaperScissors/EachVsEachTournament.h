@@ -6,13 +6,12 @@
 class EachVsEachTournament : public BaseTournament
 {
 public:
-	//using BaseTournament::BaseTournament;
-	EachVsEachTournament(std::vector<std::unique_ptr<BasePlayer>> players, std::unique_ptr<BaseGameRules> rules, const int& wins4Victory)
+	EachVsEachTournament(std::vector<std::shared_ptr<BasePlayer>>&& players, std::unique_ptr<BaseGameRules>&& rules, int wins4Victory = 1)
 		: BaseTournament(std::move(players), std::move(rules), wins4Victory)
 	{
-		//UI = std::make_unique<EachVsEachTournamentUI>();
+		mName = "Each vs Each";
 	}
-
+	
 	void Play() override;
 };
 

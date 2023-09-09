@@ -92,28 +92,28 @@ void MassTournament::PlayMassRound()
 void MassTournament::Play()
 {
 
-	while (true)
-	{
-		PlayMassRound();
+	//while (true)
+	//{
+	//	PlayMassRound();
 
-		if (players.size() > 1)
-		{
-			std::cout << "So we got several lucky guys\n";
-			Sleep(2000);
+	//	if (players.size() > 1)
+	//	{
+	//		std::cout << "So we got several lucky guys\n";
+	//		Sleep(2000);
 
-			for (const auto& player : players)
-			{
-				std::cout << player->getName() << ", ";
-			}
-			std::cout << "will play the tournament again till the winner will be determined\n";
-			Sleep(3000);
-		}
-		else { break; }
-	}
+	//		for (const auto& player : players)
+	//		{
+	//			std::cout << player->getName() << ", ";
+	//		}
+	//		std::cout << "will play the tournament again till the winner will be determined\n";
+	//		Sleep(3000);
+	//	}
+	//	else { break; }
+	//}
 
-	std::cout << "Congratulations to the " << players[0]->getName() << ", the winner of the tournament\n";
-	std::cin.get();
-	return;
+	//std::cout << "Congratulations to the " << players[0]->getName() << ", the winner of the tournament\n";
+	//std::cin.get();
+	//return;
 }
 
 //void MassTournament::ShowRulesAndScore()

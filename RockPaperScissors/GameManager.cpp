@@ -7,15 +7,16 @@
 #include <sstream>
 
 #include "GeneralUI.h"
-#include "DuelTournamentUI.h"
-#include "EachVsEachTournamentUI.h"
-#include "ClassicGameRules.h"
-#include "BigBangGameRules.h"
-#include "HumanPlayer.h"
-#include "ComputerPlayer.h"
 #include "BaseTournament.h"
+#include "BaseTournamentUI.h"
+#include "BigBangGameRules.h"
+#include "ClassicGameRules.h"
+#include "ComputerPlayer.h"
 #include "DuelTournament.h"
+#include "DuelTournamentUI.h"
 #include "EachVsEachTournament.h"
+#include "EachVsEachTournamentUI.h"
+#include "HumanPlayer.h"
 #include "MassTournament.h"
 #include "GridTournament.h"
 
@@ -24,9 +25,7 @@
 void GameManager::start()
 {   
     std::unique_ptr<BaseGameRules> selectedRules;
-    std::vector<std::unique_ptr<BasePlayer>> players;
-    std::unique_ptr<BaseTournament> tournament;
-    std::unique_ptr<BaseTournamentUI> ui;
+    std::vector<std::shared_ptr<BasePlayer>> players;
 
     //Chose the rules
     while (true)
@@ -60,8 +59,8 @@ void GameManager::start()
         //Get amount of players
         while (true)
         {
-            std::cout << "How many players are going to play (10 max): ";
-            if (std::cin >> playersAmount && playersAmount >= 1 && playersAmount <= 10) { break; }
+            std::cout << "How many players are going to play (" << mMaxPlayersNumber << " max): ";
+            if (std::cin >> playersAmount && playersAmount >= 1 && playersAmount <= mMaxPlayersNumber) { break; }
             else
             {
                 std::cout << "The game do not support THAT amount of players\n";
@@ -73,12 +72,13 @@ void GameManager::start()
         //Single player game mode
         if (playersAmount == 1)
         {
+            //??? wtf
             players.push_back(std::make_unique<HumanPlayer>());
             players.push_back(std::make_unique<ComputerPlayer>());
 
-            tournament = std::make_unique<DuelTournament>(std::move(players), std::move(selectedRules));
-            ui = std::make_unique<DuelTournamentUI>(tournament);
-            tournament->Play();
+            mTournament = std::make_unique<DuelTournament>(std::move(players), std::move(selectedRules));
+            mUI = std::make_unique<DuelTournamentUI>(mTournament);
+            mTournament->Play();
             
             break;
         }
@@ -104,9 +104,9 @@ void GameManager::start()
             if (input.empty()) { players.push_back(std::make_unique<HumanPlayer>("Player 2")); }
             else { players.push_back(std::make_unique<HumanPlayer>(input)); }
 
-            tournament = std::make_unique<DuelTournament>(std::move(players), std::move(selectedRules));
-            ui = std::make_unique<DuelTournamentUI>(tournament);
-            tournament->Play();
+            mTournament = std::make_unique<DuelTournament>(std::move(players), std::move(selectedRules));
+            mUI = std::make_unique<DuelTournamentUI>(mTournament);
+            mTournament->Play();
 
             break;
         }
@@ -118,13 +118,13 @@ void GameManager::start()
             while (true)
             {
                 std::cout << "What kind of tournament do you want: 1 - Each vs Each, 2 - Massive, 3 - Grid: ";
-                if (std::cin >> tempTournament && tempTournament >= 1 && tempTournament <= 3) { break; }
-                else
+                if (std::cin >> tempTournament && tempTournament < 1 || tempTournament > 3)
                 {
-                    std::cout << "Incorrect input\n";
-                    std::cin.clear();
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    GeneralUI::incorrectInput();
+                    continue;
                 }
+               
+                break;
             }
             
             //Each vs Each
@@ -143,9 +143,9 @@ void GameManager::start()
                     players.push_back(std::make_unique<HumanPlayer>(oss.str()));
                 }
 
-                tournament = std::make_unique<EachVsEachTournament>(std::move(players), std::move(selectedRules), wins4Victory);
-                ui = std::make_unique<EachVsEachTournamentUI>(tournament);
-                tournament->Play();
+                mTournament = std::make_unique<EachVsEachTournament>(std::move(players), std::move(selectedRules), wins4Victory);
+                mUI = std::make_unique<EachVsEachTournamentUI>(mTournament);
+                mTournament->Play();
                 break;
             }
             
@@ -163,8 +163,8 @@ void GameManager::start()
                     players.push_back(std::make_unique<HumanPlayer>(oss.str()));
                 }
 
-                tournament = std::make_unique<MassTournament>(std::move(players), std::move(selectedRules));
-                tournament->Play();
+                mTournament = std::make_unique<MassTournament>(std::move(players), std::move(selectedRules));
+                mTournament->Play();
                 break;
             }
 
@@ -195,8 +195,8 @@ void GameManager::start()
                     }
                 }
 
-                tournament = std::make_unique<GridTournament>(std::move(players), std::move(selectedRules), wins4Victory);
-                tournament->Play();
+                mTournament = std::make_unique<GridTournament>(std::move(players), std::move(selectedRules), wins4Victory);
+                mTournament->Play();
                 break;
             }
         }

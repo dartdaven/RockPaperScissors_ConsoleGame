@@ -12,37 +12,36 @@ class BaseGameRules;
 class BaseTournament
 {
 public:
-	BaseTournament(std::vector<std::unique_ptr<BasePlayer>> players, std::unique_ptr<BaseGameRules> rules, const int& wins4Victory = 1)
-		: players(std::move(players)), rules(std::move(rules)), wins4Victory(wins4Victory) {}
+	BaseTournament(std::vector<std::shared_ptr<BasePlayer>>&& players, std::unique_ptr<BaseGameRules>&& rules, int wins4Victory = 1)
+		: mPlayers(std::move(players)), mRules(std::move(rules)), mWins4Victory(wins4Victory) {}
 	virtual ~BaseTournament() {}
 	
-	using PairOfPlayersSignature = std::pair<std::unique_ptr<BasePlayer>&, std::unique_ptr<BasePlayer>&>;
+	using PairOfPlayersSignature = std::pair< std::shared_ptr<BasePlayer>, std::shared_ptr<BasePlayer>>;
 
 	virtual void Play() = 0;
-	virtual void PlayRound(PairOfPlayersSignature pairOfPlayers);
+	virtual void PlayRound();
 
-	void setRoundEventCallback(std::function<void(const Event&)>&& callback) { roundEventCallback = std::move(callback); }
-	void setTournamentEventCallback(std::function<void(const Event&)>&& callback) { tournamentEventCallback = std::move(callback); }
+	void setEventCallback(std::function<void(const Event&)>&& callback) { mEventCallback = std::move(callback); }
 
 	//Getters
-	const std::vector<std::unique_ptr<BasePlayer>>& getPlayers() const { return players; }
-	const std::unique_ptr<BaseGameRules>& getRules() const { return rules; };
-	const int& getWins4Victory() const { return wins4Victory; };
-	const std::string& getName() const { return name; };
-	PairOfPlayersSignature* getPairOfPlayers() const { return mPairOfPlayers; };
-	const std::pair<Move, Move>& getPairOfMoves() const { return mPairOfMoves; };
+	const std::vector<std::shared_ptr<BasePlayer>>& getPlayers() const { return mPlayers; }
+	const std::unique_ptr<BaseGameRules>& getRules() const { return mRules; };
+	const int& getWins4Victory() const { return mWins4Victory; };
+	const std::string& getName() const { return mName; };
+
+	const PairOfPlayersSignature& getPairOfRoundPlayers() const { return mPairOfRoundPlayers; };
+	const std::pair<Move, Move>& getPairOfRoundMoves() const { return mPairOfRoundMoves; };
 
 protected:
-	std::vector<std::unique_ptr<BasePlayer>> players;
-	std::unique_ptr<BaseGameRules> rules;
-	int wins4Victory;
-	std::string name;
+	std::vector<std::shared_ptr<BasePlayer>> mPlayers;
+	std::unique_ptr<BaseGameRules> mRules;
+	int mWins4Victory;
+	std::string mName;
 
-	//Don't like this code
-	PairOfPlayersSignature* mPairOfPlayers {};
-	std::pair<Move, Move> mPairOfMoves;
+	//For Round purposes
+	PairOfPlayersSignature mPairOfRoundPlayers;
+	std::pair<Move, Move> mPairOfRoundMoves;
 	
 	//Callbacks
-	std::function<void(const Event&)> roundEventCallback;
-	std::function<void(const Event&)> tournamentEventCallback;
+	std::function<void(const Event&)> mEventCallback;
 };
