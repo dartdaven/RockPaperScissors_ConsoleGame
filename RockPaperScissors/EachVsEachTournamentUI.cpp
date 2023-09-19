@@ -1,5 +1,6 @@
 #include "EachVsEachTournamentUI.h"
 
+#include <cassert>
 #include <Windows.h>
 
 #include "GeneralUI.h"
@@ -8,13 +9,17 @@ bool EachVsEachTournamentUI::onEvent(const Event& event) const
 {
 	if (BaseTournamentUI::onEvent(event)) { return true; }
 
+	std::shared_ptr<BaseTournament> tournamentPtr;
+	if (tournamentPtr = tournament.lock()) {}
+	else { assert(false); }
+
 	switch (event)
 	{
 	case Event::MainCycleEnded:
 		GeneralUI::clearConsoleSmoothly();
 
 		std::cout << "\nHere's the current standings of the tournament:\n";
-		for (const auto& player : tournament->getPlayers())
+		for (const auto& player : tournamentPtr->getPlayers())
 		{
 			std::cout << player->getName() << " : " << player->getScore() << ";\n";
 		}
@@ -24,13 +29,13 @@ bool EachVsEachTournamentUI::onEvent(const Event& event) const
 		return true;
 
 	case Event::TournamentEnded:
-		winnerOfTheTournament(tournament->getPlayers()[0]->getName());
+		winnerOfTheTournament(tournamentPtr->getPlayers()[0]->getName());
 		return true;
 
 	case Event::TwoHighScorers:
 
 		{
-			std::pair< std::shared_ptr<BasePlayer>, std::shared_ptr<BasePlayer>> pairOfRoundPlayers = tournament->getPairOfRoundPlayers();
+			std::pair< std::shared_ptr<BasePlayer>, std::shared_ptr<BasePlayer>> pairOfRoundPlayers = tournamentPtr->getPairOfRoundPlayers();
 
 			std::cout << "\nWe have 2 guys with high score, but only one can win the tournament\n";
 			std::cout << "So it's the Duel then with rules of the tournament between " << pairOfRoundPlayers.first->getName()
@@ -42,15 +47,15 @@ bool EachVsEachTournamentUI::onEvent(const Event& event) const
 	case Event::CantDetermineTheWinner:
 
 		std::cout << "\nCan't determine the winner\n";
-		for (int i = 0; i < tournament->getPlayers().size(); ++i)
+		for (int i = 0; i < tournamentPtr->getPlayers().size(); ++i)
 		{
-			if (i != tournament->getPlayers().size() - 1)
+			if (i != tournamentPtr->getPlayers().size() - 1)
 			{
-				std::cout << tournament->getPlayers()[i]->getName() << ", ";
+				std::cout << tournamentPtr->getPlayers()[i]->getName() << ", ";
 			}
 			else
 			{
-				std::cout << tournament->getPlayers()[i]->getName() << " ";
+				std::cout << tournamentPtr->getPlayers()[i]->getName() << " ";
 			}
 		}
 		std::cout << "will play the tournament again till the winner will be determined\n";
@@ -63,7 +68,11 @@ bool EachVsEachTournamentUI::onEvent(const Event& event) const
 
 void EachVsEachTournamentUI::showRules() const
 {
-	std::cout << "Game mode - " << tournament->getName() << " | Rules - " << rulesToString(tournament->getRules()->getRules()) 
-		<< " | Wins for Victory - " << tournament->getWins4Victory() << "\n";
-	std::cout << stringOfPossibleMoves(tournament->getRules()->getPossibleMoves()) << "\n\n";
+	std::shared_ptr<BaseTournament> tournamentPtr;
+	if (tournamentPtr = tournament.lock())
+	{
+		std::cout << "Game mode - " << tournamentPtr->getName() << " | Rules - " << rulesToString(tournamentPtr->getRules()->getRules())
+			<< " | Wins for Victory - " << tournamentPtr->getWins4Victory() << "\n";
+		std::cout << stringOfPossibleMoves(tournamentPtr->getRules()->getPossibleMoves()) << "\n\n";
+	}
 }

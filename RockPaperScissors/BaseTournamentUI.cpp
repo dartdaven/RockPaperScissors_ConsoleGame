@@ -1,5 +1,6 @@
 #include "BaseTournamentUI.h"
 
+#include <cassert>
 #include <sstream>
 #include <Windows.h>
 
@@ -14,7 +15,11 @@
 
 bool BaseTournamentUI::onEvent(const Event& event) const
 {
-    std::pair< std::shared_ptr<BasePlayer>, std::shared_ptr<BasePlayer>> pairOfRoundPlayers = tournament->getPairOfRoundPlayers();
+    std::shared_ptr<BaseTournament> tournamentPtr;
+    if (tournamentPtr = tournament.lock()) {}
+    else { assert(false); }
+
+    std::pair< std::shared_ptr<BasePlayer>, std::shared_ptr<BasePlayer>> pairOfRoundPlayers = tournamentPtr->getPairOfRoundPlayers();
     
     switch (event)
     {
@@ -36,22 +41,22 @@ bool BaseTournamentUI::onEvent(const Event& event) const
         showScore();
 
         {
-            std::pair<Move, Move> pairOfMoves = tournament->getPairOfRoundMoves();
+            std::pair<Move, Move> pairOfMoves = tournamentPtr->getPairOfRoundMoves();
 
             std::cout << pairOfRoundPlayers.first->getName() << " chose " << moveToString(pairOfMoves.first) << "     "
                 << pairOfRoundPlayers.second->getName() << " chose " << moveToString(pairOfMoves.second) << "\n\n";
             Sleep(2000);
 
-            int tempResult = tournament->getRules()->determineWinner(pairOfMoves);
+            int tempResult = tournamentPtr->getRules()->determineWinner(pairOfMoves);
 
             switch (tempResult)
             {
             case 1:
                 std::cout << moveToString(pairOfMoves.first) << " beats " << moveToString(pairOfMoves.second) << std::endl;
 
-                if (tournament->getWins4Victory() > 1)
+                if (tournamentPtr->getWins4Victory() > 1)
                 {
-                    std::cout << pairOfRoundPlayers.first->getName() << " won " << pairOfRoundPlayers.first->getWins() << " of " << tournament->getWins4Victory() << std::endl;
+                    std::cout << pairOfRoundPlayers.first->getName() << " won " << pairOfRoundPlayers.first->getWins() << " of " << tournamentPtr->getWins4Victory() << std::endl;
                 }
                 Sleep(3000);
                 break;
@@ -59,9 +64,9 @@ bool BaseTournamentUI::onEvent(const Event& event) const
             case 2:
                 std::cout << moveToString(pairOfMoves.second) << " beats " << moveToString(pairOfMoves.first) << std::endl;
 
-                if (tournament->getWins4Victory() > 1)
+                if (tournamentPtr->getWins4Victory() > 1)
                 {
-                    std::cout << pairOfRoundPlayers.second->getName() << " won " << pairOfRoundPlayers.second->getWins() << " of " << tournament->getWins4Victory() << std::endl;
+                    std::cout << pairOfRoundPlayers.second->getName() << " won " << pairOfRoundPlayers.second->getWins() << " of " << tournamentPtr->getWins4Victory() << std::endl;
                 }
                 Sleep(3000);
                 break;
@@ -77,7 +82,7 @@ bool BaseTournamentUI::onEvent(const Event& event) const
 
     case Event::RoundEnded:
 
-        if (pairOfRoundPlayers.first->getWins() == tournament->getWins4Victory())
+        if (pairOfRoundPlayers.first->getWins() == tournamentPtr->getWins4Victory())
         {
             std::cout << pairOfRoundPlayers.first->getName() << " is the winner of the round\n";
             Sleep(3000);

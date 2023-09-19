@@ -37,7 +37,6 @@ void EachVsEachTournament::Play()
         PlayRound();
     }
 
-
     //After tournament has been played  
     mEventCallback(Event::MainCycleEnded);
 

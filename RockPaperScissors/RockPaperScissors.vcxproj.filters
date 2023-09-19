@@ -69,6 +69,12 @@
     <ClCompile Include="DuelTournamentUI.cpp">
       <Filter>Files\TournamentUI</Filter>
     </ClCompile>
+    <ClCompile Include="MassTournamentUI.cpp">
+      <Filter>Files\TournamentUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GridTournamentUI.cpp">
+      <Filter>Files\TournamentUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enums.h">
@@ -120,6 +126,12 @@
       <Filter>Files\TournamentUI</Filter>
     </ClInclude>
     <ClInclude Include="DuelTournamentUI.h">
+      <Filter>Files\TournamentUI</Filter>
+    </ClInclude>
+    <ClInclude Include="MassTournamentUI.h">
+      <Filter>Files\TournamentUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GridTournamentUI.h">
       <Filter>Files\TournamentUI</Filter>
     </ClInclude>
   </ItemGroup>

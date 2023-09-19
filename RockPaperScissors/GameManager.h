@@ -17,7 +17,7 @@ public:
 private:
 	int getWins4Victory();
 	
-	std::unique_ptr<BaseTournament> mTournament;
+	std::shared_ptr<BaseTournament> mTournament;
 	std::unique_ptr<BaseTournamentUI> mUI;
 
 	int mMaxPlayersNumber = 8;

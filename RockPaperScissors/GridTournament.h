@@ -7,11 +7,16 @@
 class GridTournament : public BaseTournament
 {
 public:
-	using BaseTournament::BaseTournament;
+	GridTournament(std::vector<std::shared_ptr<BasePlayer>>&& players, std::unique_ptr<BaseGameRules>&& rules, int wins4Victory = 1)
+		: BaseTournament(std::move(players), std::move(rules), wins4Victory)
+	{
+		mName = (mPlayers.size() > 4) ? "Grid 8" : "Grid 4";
+		mTours = (mPlayers.size() > 4) ? 3 : 2;
+	}
+
 	void Play() override;
-private: 
-	void ShowGrid();
-	std::vector<std::string> gridCells;
-	void writeToCell(const int& cellNumber, const std::string& whatToWrite);
+private:
+	int mTourCount{0};
+	int mTours;
 };
 

@@ -10,7 +10,7 @@ class BasePlayer;
 class BaseTournamentUI
 {
 public:
-	BaseTournamentUI(std::unique_ptr<BaseTournament>& tournament) : tournament(tournament)
+	BaseTournamentUI(std::shared_ptr<BaseTournament>& tournament) : tournament(tournament)
 	{
 		tournament->setEventCallback(std::bind(&BaseTournamentUI::onEvent, this, std::placeholders::_1));
 	}
@@ -31,6 +31,6 @@ public:
 	void winnerOfTheTournament(const std::string& name) const;
 
 protected:
-	std::unique_ptr<BaseTournament>& tournament;
+	std::weak_ptr<BaseTournament> tournament;
 };
 

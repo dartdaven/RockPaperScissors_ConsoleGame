@@ -18,7 +18,9 @@
 #include "EachVsEachTournamentUI.h"
 #include "HumanPlayer.h"
 #include "MassTournament.h"
+#include "MassTournamentUI.h"
 #include "GridTournament.h"
+#include "GridTournamentUI.h"
 
 #include "Enums.h"
 
@@ -72,11 +74,10 @@ void GameManager::start()
         //Single player game mode
         if (playersAmount == 1)
         {
-            //??? wtf
-            players.push_back(std::make_unique<HumanPlayer>());
-            players.push_back(std::make_unique<ComputerPlayer>());
+            players.push_back(std::make_shared<HumanPlayer>());
+            players.push_back(std::make_shared<ComputerPlayer>());
 
-            mTournament = std::make_unique<DuelTournament>(std::move(players), std::move(selectedRules));
+            mTournament = std::make_shared<DuelTournament>(std::move(players), std::move(selectedRules));
             mUI = std::make_unique<DuelTournamentUI>(mTournament);
             mTournament->Play();
             
@@ -164,6 +165,7 @@ void GameManager::start()
                 }
 
                 mTournament = std::make_unique<MassTournament>(std::move(players), std::move(selectedRules));
+                mUI = std::make_unique<MassTournamentUI>(mTournament);
                 mTournament->Play();
                 break;
             }
@@ -184,18 +186,8 @@ void GameManager::start()
                     players.push_back(std::make_unique<HumanPlayer>(oss.str()));
                 }
 
-                //TO DO normal
-                if (playersAmount < 8)
-                {
-                    int compAmount = 8 - playersAmount;
-
-                    for (int i = 0; i < compAmount; ++i)
-                    {
-                        players.push_back(std::make_unique<ComputerPlayer>());
-                    }
-                }
-
                 mTournament = std::make_unique<GridTournament>(std::move(players), std::move(selectedRules), wins4Victory);
+                mUI = std::make_unique<GridTournamentUI>(mTournament);
                 mTournament->Play();
                 break;
             }

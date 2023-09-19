@@ -29,6 +29,8 @@ public:
 	const int& getWins4Victory() const { return mWins4Victory; };
 	const std::string& getName() const { return mName; };
 
+	//RoundGetters
+	const std::vector<Move>& getVectorofMassiveRoundMoves() const { return mVectorofMassiveRoundMoves; }
 	const PairOfPlayersSignature& getPairOfRoundPlayers() const { return mPairOfRoundPlayers; };
 	const std::pair<Move, Move>& getPairOfRoundMoves() const { return mPairOfRoundMoves; };
 
@@ -41,6 +43,7 @@ protected:
 	//For Round purposes
 	PairOfPlayersSignature mPairOfRoundPlayers;
 	std::pair<Move, Move> mPairOfRoundMoves;
+	std::vector<Move> mVectorofMassiveRoundMoves;
 	
 	//Callbacks
 	std::function<void(const Event&)> mEventCallback;
