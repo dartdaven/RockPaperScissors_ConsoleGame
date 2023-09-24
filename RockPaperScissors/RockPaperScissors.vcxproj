@@ -168,6 +168,8 @@
     <ClInclude Include="BasePlayer.h" />
     <ClInclude Include="BaseTournament.h" />
     <ClInclude Include="MassTournamentUI.h" />
+    <ClInclude Include="RulesFactory.h" />
+    <ClInclude Include="TournamentFactory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

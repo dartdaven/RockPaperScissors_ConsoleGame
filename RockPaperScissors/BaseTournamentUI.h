@@ -23,8 +23,6 @@ public:
 	virtual void showRules() const = 0;
 	virtual void showScore() const = 0;
 
-	std::string rulesToString(const Rules& rules) const;
-	std::string moveToString(const Move& move) const;
 	std::string stringOfPossibleMoves(const std::vector<Move>& possibleMoves) const;
 
 	//not mine

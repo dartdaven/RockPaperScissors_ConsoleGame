@@ -6,14 +6,15 @@
 
 #include "Enums.h"
 #include "BasePlayer.h"
+#include "RulesFactory.h"
 
 class BaseGameRules;
 
 class BaseTournament
 {
 public:
-	BaseTournament(std::vector<std::shared_ptr<BasePlayer>>&& players, std::unique_ptr<BaseGameRules>&& rules, int wins4Victory = 1)
-		: mPlayers(std::move(players)), mRules(std::move(rules)), mWins4Victory(wins4Victory) {}
+	BaseTournament(std::vector<std::shared_ptr<BasePlayer>>&& players, Rules rules, int wins4Victory = 1)
+		: mPlayers(std::move(players)), mRules(RulesFactory::generateRules(rules)), mWins4Victory(wins4Victory) {}
 	virtual ~BaseTournament() {}
 	
 	using PairOfPlayersSignature = std::pair< std::shared_ptr<BasePlayer>, std::shared_ptr<BasePlayer>>;
@@ -30,9 +31,11 @@ public:
 	const std::string& getName() const { return mName; };
 
 	//RoundGetters
-	const std::vector<Move>& getVectorofMassiveRoundMoves() const { return mVectorofMassiveRoundMoves; }
 	const PairOfPlayersSignature& getPairOfRoundPlayers() const { return mPairOfRoundPlayers; };
 	const std::pair<Move, Move>& getPairOfRoundMoves() const { return mPairOfRoundMoves; };
+	
+	//doesn't good
+	const std::vector<Move>& getVectorofMassiveRoundMoves() const { return mVectorofMassiveRoundMoves; }
 
 protected:
 	std::vector<std::shared_ptr<BasePlayer>> mPlayers;
@@ -43,6 +46,8 @@ protected:
 	//For Round purposes
 	PairOfPlayersSignature mPairOfRoundPlayers;
 	std::pair<Move, Move> mPairOfRoundMoves;
+	
+	//doesn't good that knows about inheritance
 	std::vector<Move> mVectorofMassiveRoundMoves;
 	
 	//Callbacks

@@ -6,8 +6,8 @@
 class EachVsEachTournament : public BaseTournament
 {
 public:
-	EachVsEachTournament(std::vector<std::shared_ptr<BasePlayer>>&& players, std::unique_ptr<BaseGameRules>&& rules, int wins4Victory = 1)
-		: BaseTournament(std::move(players), std::move(rules), wins4Victory)
+	EachVsEachTournament(std::vector<std::shared_ptr<BasePlayer>>&& players, Rules rules, int wins4Victory = 1)
+		: BaseTournament(std::move(players), rules, wins4Victory)
 	{
 		mName = "Each vs Each";
 	}

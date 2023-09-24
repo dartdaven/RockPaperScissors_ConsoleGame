@@ -71,7 +71,7 @@ void EachVsEachTournamentUI::showRules() const
 	std::shared_ptr<BaseTournament> tournamentPtr;
 	if (tournamentPtr = tournament.lock())
 	{
-		std::cout << "Game mode - " << tournamentPtr->getName() << " | Rules - " << rulesToString(tournamentPtr->getRules()->getRules())
+		std::cout << "Game mode - " << tournamentPtr->getName() << " | Rules - " << GeneralUI::rulesToString(tournamentPtr->getRules()->getRules())
 			<< " | Wins for Victory - " << tournamentPtr->getWins4Victory() << "\n";
 		std::cout << stringOfPossibleMoves(tournamentPtr->getRules()->getPossibleMoves()) << "\n\n";
 	}

@@ -43,8 +43,8 @@ bool BaseTournamentUI::onEvent(const Event& event) const
         {
             std::pair<Move, Move> pairOfMoves = tournamentPtr->getPairOfRoundMoves();
 
-            std::cout << pairOfRoundPlayers.first->getName() << " chose " << moveToString(pairOfMoves.first) << "     "
-                << pairOfRoundPlayers.second->getName() << " chose " << moveToString(pairOfMoves.second) << "\n\n";
+            std::cout << pairOfRoundPlayers.first->getName() << " chose " << GeneralUI::moveToString(pairOfMoves.first) << "     "
+                << pairOfRoundPlayers.second->getName() << " chose " << GeneralUI::moveToString(pairOfMoves.second) << "\n\n";
             Sleep(2000);
 
             int tempResult = tournamentPtr->getRules()->determineWinner(pairOfMoves);
@@ -52,7 +52,7 @@ bool BaseTournamentUI::onEvent(const Event& event) const
             switch (tempResult)
             {
             case 1:
-                std::cout << moveToString(pairOfMoves.first) << " beats " << moveToString(pairOfMoves.second) << std::endl;
+                std::cout << GeneralUI::moveToString(pairOfMoves.first) << " beats " << GeneralUI::moveToString(pairOfMoves.second) << std::endl;
 
                 if (tournamentPtr->getWins4Victory() > 1)
                 {
@@ -62,7 +62,7 @@ bool BaseTournamentUI::onEvent(const Event& event) const
                 break;
 
             case 2:
-                std::cout << moveToString(pairOfMoves.second) << " beats " << moveToString(pairOfMoves.first) << std::endl;
+                std::cout << GeneralUI::moveToString(pairOfMoves.second) << " beats " << GeneralUI::moveToString(pairOfMoves.first) << std::endl;
 
                 if (tournamentPtr->getWins4Victory() > 1)
                 {
@@ -99,33 +99,6 @@ bool BaseTournamentUI::onEvent(const Event& event) const
     return false;
 }
 
-std::string BaseTournamentUI::rulesToString(const Rules& rules) const
-{
-    switch (rules)
-    {
-    case Rules::Classic: return "Classic";
-    case Rules::BigBang: return "Big Bang Theory";
-    default:
-        std::cerr << "Something wrong with converting Rules to String\n";
-        return std::string();
-    };
-}
-
-std::string BaseTournamentUI::moveToString(const Move& move) const
-{
-    switch (move)
-    {
-    case Move::Rock: return "Rock";
-    case Move::Paper: return "Paper";
-    case Move::Scissors: return "Scissors";
-    case Move::Lizard: return "Lizard";
-    case Move::Spock: return "Spock";
-    default:
-        std::cerr << "Something wrong with converting Move to String\n";
-        return std::string();
-    };
-}
-
 std::string BaseTournamentUI::stringOfPossibleMoves(const std::vector<Move>& possibleMoves) const
 {
     std::ostringstream oss;
@@ -133,11 +106,11 @@ std::string BaseTournamentUI::stringOfPossibleMoves(const std::vector<Move>& pos
     {
         if (i != possibleMoves.size() - 1)
         {
-            oss << i << " - " << moveToString(possibleMoves[i]) << ", ";
+            oss << i << " - " << GeneralUI::moveToString(possibleMoves[i]) << ", ";
         }
         else
         {
-            oss << i << " - " << moveToString(possibleMoves[i]);
+            oss << i << " - " << GeneralUI::moveToString(possibleMoves[i]);
         }
     }
 

@@ -25,17 +25,15 @@ GridTournamentUI::GridTournamentUI(std::shared_ptr<BaseTournament>& tournament)
 	}
 	if (tournament->getPlayers().size() % 2)
 	{
-		WriteToCell(tournament->getPlayers().size(), "Computer");
+		WriteToCell(static_cast<int>(tournament->getPlayers().size()), "Computer");
 	}
 
 	//choose the grid
-	//How can I do it without a lambda?
 	if (tournament->getPlayers().size() > 4) {
-		ShowGrid = [this]() { this->ShowGrid8(); };
-
+		ShowGrid = std::bind(&GridTournamentUI::ShowGrid8, this);
 	}
 	else {
-		ShowGrid = [this]() { this->ShowGrid4(); };
+		ShowGrid = std::bind(&GridTournamentUI::ShowGrid4, this);
 	}
 }
 
@@ -123,7 +121,7 @@ void GridTournamentUI::showRules() const
 	std::shared_ptr<BaseTournament> tournamentPtr;
 	if (tournamentPtr = tournament.lock())
 	{
-		std::cout << "Game mode - " << tournamentPtr->getName() << " | Rules - " << rulesToString(tournamentPtr->getRules()->getRules())
+		std::cout << "Game mode - " << tournamentPtr->getName() << " | Rules - " << GeneralUI::rulesToString(tournamentPtr->getRules()->getRules())
 			<< " | Wins for Victory - " << tournamentPtr->getWins4Victory() << "\n";
 		std::cout << stringOfPossibleMoves(tournamentPtr->getRules()->getPossibleMoves()) << "\n\n";
 	}

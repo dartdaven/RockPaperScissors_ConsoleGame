@@ -2,10 +2,11 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "Enums.h"
 
-enum class Rules { Classic, BigBang };
+enum class Rules { Classic, BigBang, Count };
 
 class BaseGameRules
 {

@@ -2,11 +2,14 @@
 
 #include <iostream>
 #include <limits>
+#include <conio.h>
 
 #include "GeneralUI.h"
 
 Move HumanPlayer::makeMove(const std::unique_ptr<BaseGameRules>& rules) const
 {
+    GeneralUI::clearInputBuffer();
+
 	int temp;
 
     std::cout << this->getName() << ", please make your move: ";
@@ -21,14 +24,4 @@ Move HumanPlayer::makeMove(const std::unique_ptr<BaseGameRules>& rules) const
             GeneralUI::incorrectInput();
         }
     }
-}
-
-std::string HumanPlayer::getName() const
-{
-    return name;
-}
-
-bool HumanPlayer::isBot() const
-{
-    return false;
 }

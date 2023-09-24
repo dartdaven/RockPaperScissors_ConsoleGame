@@ -3,11 +3,7 @@
 #include <memory>
 
 #include "BaseTournamentUI.h"
-
 class BaseTournament;
-
-//To ask why
-//class BaseTournamentUI;
 
 class GameManager
 {
@@ -16,11 +12,14 @@ public:
 
 private:
 	int getWins4Victory();
+	void setupPlayers();
 	
 	std::shared_ptr<BaseTournament> mTournament;
 	std::unique_ptr<BaseTournamentUI> mUI;
+	std::vector<std::shared_ptr<BasePlayer>> mPlayersToMove;
 
 	int mMaxPlayersNumber = 8;
+	int mMaxPlayersNameSize = 8;
 
 };
 

@@ -24,7 +24,7 @@ bool MassTournamentUI::onEvent(const Event& event) const
 			for (int i = 0; i < players.size(); ++i)
 			{
 				std::cout << players[i]->getName() << " chose: "
-					<< moveToString(moves[i]) << "\n";
+					<< GeneralUI::moveToString(moves[i]) << "\n";
 			}
 			std::cout << "\n";
 			Sleep(4000);
@@ -72,7 +72,7 @@ void MassTournamentUI::showRules() const
 	std::shared_ptr<BaseTournament> tournamentPtr;
 	if (tournamentPtr = tournament.lock())
 	{
-		std::cout << "Game mode - " << tournamentPtr->getName() << " | Rules - " << rulesToString(tournamentPtr->getRules()->getRules()) << "\n";
+		std::cout << "Game mode - " << tournamentPtr->getName() << " | Rules - " << GeneralUI::rulesToString(tournamentPtr->getRules()->getRules()) << "\n";
 		std::cout << stringOfPossibleMoves(tournamentPtr->getRules()->getPossibleMoves()) << "\n\n";
 	}
 }
