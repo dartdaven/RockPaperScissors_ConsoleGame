@@ -6,7 +6,7 @@
 
 #include "GeneralUI.h"
 
-Move HumanPlayer::makeMove(const std::unique_ptr<BaseGameRules>& rules) const
+Move HumanPlayer::makeMove(const std::unique_ptr<BaseGameRules>& rules)
 {
     GeneralUI::clearInputBuffer();
 
@@ -16,8 +16,10 @@ Move HumanPlayer::makeMove(const std::unique_ptr<BaseGameRules>& rules) const
     
     while (true)
     {
-        if (std::cin >> temp && temp >= 0 && temp < rules->getPossibleMoves().size()) { 
-            return rules->getPossibleMoves()[temp];
+        if (std::cin >> temp && temp >= 0 && temp < rules->getPossibleMoves().size()) 
+        {
+            mLastMoveMade = rules->getPossibleMoves()[temp];
+            return mLastMoveMade;
         }
         else
         { 

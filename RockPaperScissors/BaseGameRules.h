@@ -17,7 +17,7 @@ public:
 	virtual int determineWinner(const std::pair<Move, Move>& pairOfMoves) const = 0;
 	
 	virtual Rules getRules() const = 0;
-	const std::vector<Move>& getPossibleMoves() const;
+	const std::vector<Move>& getPossibleMoves() const { return possibleMoves; }
 
 protected:
 	std::vector<Move> possibleMoves;

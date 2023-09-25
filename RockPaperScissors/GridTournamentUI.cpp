@@ -39,22 +39,31 @@ GridTournamentUI::GridTournamentUI(std::shared_ptr<BaseTournament>& tournament)
 
 bool GridTournamentUI::onEvent(const Event& event) const
 {
-	if (BaseTournamentUI::onEvent(event)) { return true; }
-
 	std::shared_ptr<BaseTournament> tournamentPtr;
 	if (tournamentPtr = tournament.lock()) {}
 	else { assert(false); }
 
 	switch (event)
 	{
-	case Event::GridRoundStarted:
+	case Event::RoundStarted:
 		GeneralUI::clearConsoleSmoothly();
 		showRules();
 		ShowGrid();
+		BaseTournamentUI::onEvent(event);
 		return true;
 	
-	case Event::GridRoundEnded:
+	case Event::PlayerMadeMove:
+		BaseTournamentUI::onEvent(event);
+		return true;
+
+	case Event::AllPlayersMadeMoves:
+		BaseTournamentUI::onEvent(event);
+		return true;
+
+	case Event::RoundEnded:
 	{
+ 		BaseTournamentUI::onEvent(event);
+
 		int CellToWrite{};
 
 		//hardcode don't like it
@@ -66,8 +75,9 @@ bool GridTournamentUI::onEvent(const Event& event) const
 		if (mCurrentRound == 6) { CellToWrite = 13; }
 
 		{
-			std::pair< std::shared_ptr<BasePlayer>, std::shared_ptr<BasePlayer>> pairOfRoundPlayers = tournamentPtr->getPairOfRoundPlayers();
-			if (pairOfRoundPlayers.first->getScore() > pairOfRoundPlayers.second->getScore())
+			std::pair< std::shared_ptr<BasePlayer>, std::shared_ptr<BasePlayer>> pairOfRoundPlayers = tournamentPtr->getPairOfCurrentRoundPlayers();
+			
+			if (pairOfRoundPlayers.first->getWins() == tournamentPtr->getWins4Victory())
 			{
 				WriteToCell(CellToWrite, pairOfRoundPlayers.first->getName());
 			}
@@ -111,11 +121,13 @@ bool GridTournamentUI::onEvent(const Event& event) const
 		}
 		return true;
 	}
-
+	
+	std::cerr << "Wrong tournament Event has been passed";
+	assert(false);
 	return false;
 }
 
-//same as Each vs Each need to remove
+//same as Each vs Each
 void GridTournamentUI::showRules() const
 {
 	std::shared_ptr<BaseTournament> tournamentPtr;
@@ -200,6 +212,6 @@ void GridTournamentUI::WriteToCell(int cellNumber, const std::string& whatToWrit
 	std::string temp = whatToWrite;
 	if (temp.size() > mGridCells[0].size()) { temp.resize(mGridCells[0].size()); }
 
-	//May be need to "clear" it before 
+	mGridCells[cellNumber] = mEmptyCell;
 	mGridCells[cellNumber].replace(0, temp.size(), temp);
 }

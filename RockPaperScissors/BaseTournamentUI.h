@@ -20,7 +20,7 @@ public:
 	virtual bool onEvent(const Event& event) const;
 
 	//general funcs
-	virtual void showRules() const = 0;
+	virtual void showRules() const;
 	virtual void showScore() const = 0;
 
 	std::string stringOfPossibleMoves(const std::vector<Move>& possibleMoves) const;

@@ -31,11 +31,7 @@ public:
 	const std::string& getName() const { return mName; };
 
 	//RoundGetters
-	const PairOfPlayersSignature& getPairOfRoundPlayers() const { return mPairOfRoundPlayers; };
-	const std::pair<Move, Move>& getPairOfRoundMoves() const { return mPairOfRoundMoves; };
-	
-	//doesn't good
-	const std::vector<Move>& getVectorofMassiveRoundMoves() const { return mVectorofMassiveRoundMoves; }
+	const PairOfPlayersSignature& getPairOfCurrentRoundPlayers() const { return mPairOfCurrentRoundPlayers; };
 
 protected:
 	std::vector<std::shared_ptr<BasePlayer>> mPlayers;
@@ -44,11 +40,7 @@ protected:
 	std::string mName;
 
 	//For Round purposes
-	PairOfPlayersSignature mPairOfRoundPlayers;
-	std::pair<Move, Move> mPairOfRoundMoves;
-	
-	//doesn't good that knows about inheritance
-	std::vector<Move> mVectorofMassiveRoundMoves;
+	PairOfPlayersSignature mPairOfCurrentRoundPlayers;
 	
 	//Callbacks
 	std::function<void(const Event&)> mEventCallback;

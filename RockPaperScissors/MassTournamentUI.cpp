@@ -19,12 +19,11 @@ bool MassTournamentUI::onEvent(const Event& event) const
 		std::cout << "Here are all the moves:\n";
 		{
 			auto players = tournamentPtr->getPlayers();
-			auto moves = tournamentPtr->getVectorofMassiveRoundMoves();
 
 			for (int i = 0; i < players.size(); ++i)
 			{
 				std::cout << players[i]->getName() << " chose: "
-					<< GeneralUI::moveToString(moves[i]) << "\n";
+					<< GeneralUI::moveToString(players[i]->getLastMoveMade()) << "\n";
 			}
 			std::cout << "\n";
 			Sleep(4000);
@@ -36,7 +35,6 @@ bool MassTournamentUI::onEvent(const Event& event) const
 		Sleep(3000);
 		return true;
 	
-	//same as EvE tournament
 	case Event::CantDetermineTheWinner:
 		std::cout << "So we got several lucky guys\n";
 		Sleep(2000);
@@ -63,16 +61,7 @@ bool MassTournamentUI::onEvent(const Event& event) const
 		return true;
 	}
 
+	std::cerr << "Wrong tournament Event has been passed";
+	assert(false);
 	return false;
-}
-
-//same as DuelTournament
-void MassTournamentUI::showRules() const
-{
-	std::shared_ptr<BaseTournament> tournamentPtr;
-	if (tournamentPtr = tournament.lock())
-	{
-		std::cout << "Game mode - " << tournamentPtr->getName() << " | Rules - " << GeneralUI::rulesToString(tournamentPtr->getRules()->getRules()) << "\n";
-		std::cout << stringOfPossibleMoves(tournamentPtr->getRules()->getPossibleMoves()) << "\n\n";
-	}
 }

@@ -9,7 +9,7 @@ class HumanPlayer : public BasePlayer
 public:
 	HumanPlayer(const std::string& name = "Player") : name(name) {}
 
-	Move makeMove(const std::unique_ptr<BaseGameRules>& rules) const override;
+	Move makeMove(const std::unique_ptr<BaseGameRules>& rules) override;
 	std::string getName() const override { return name; };
 	bool isBot() const override { return false; };
 

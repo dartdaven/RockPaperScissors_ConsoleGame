@@ -33,7 +33,7 @@ void EachVsEachTournament::Play()
         {
             std::swap(pair.first, pair.second);
         }
-        mPairOfRoundPlayers = pair;
+        mPairOfCurrentRoundPlayers = pair;
         PlayRound();
     }
 
@@ -61,13 +61,12 @@ void EachVsEachTournament::Play()
     //if there are 2 highScorers
     if (mPlayers.size() == 2)
     {
-        PairOfPlayersSignature pairOfMaxScorers(mPlayers[0], mPlayers[1]);
-        mPairOfRoundPlayers = pairOfMaxScorers;
-        mEventCallback(Event::TwoHighScorers);
+        mPairOfCurrentRoundPlayers = PairOfPlayersSignature(mPlayers[0], mPlayers[1]);
+        mEventCallback(Event::CantDetermineTheWinner);
 
         PlayRound();
 
-        if (pairOfMaxScorers.first->getScore() > pairOfMaxScorers.second->getScore())
+        if (mPairOfCurrentRoundPlayers.first->getScore() > mPairOfCurrentRoundPlayers.second->getScore())
         {
             mPlayers.erase(mPlayers.end());
         }

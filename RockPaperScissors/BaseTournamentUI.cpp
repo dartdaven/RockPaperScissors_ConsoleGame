@@ -19,7 +19,7 @@ bool BaseTournamentUI::onEvent(const Event& event) const
     if (tournamentPtr = tournament.lock()) {}
     else { assert(false); }
 
-    std::pair< std::shared_ptr<BasePlayer>, std::shared_ptr<BasePlayer>> pairOfRoundPlayers = tournamentPtr->getPairOfRoundPlayers();
+    std::pair< std::shared_ptr<BasePlayer>, std::shared_ptr<BasePlayer>> pairOfRoundPlayers = tournamentPtr->getPairOfCurrentRoundPlayers();
     
     switch (event)
     {
@@ -41,7 +41,7 @@ bool BaseTournamentUI::onEvent(const Event& event) const
         showScore();
 
         {
-            std::pair<Move, Move> pairOfMoves = tournamentPtr->getPairOfRoundMoves();
+            std::pair<Move, Move> pairOfMoves {pairOfRoundPlayers.first->getLastMoveMade(), pairOfRoundPlayers.second->getLastMoveMade()};
 
             std::cout << pairOfRoundPlayers.first->getName() << " chose " << GeneralUI::moveToString(pairOfMoves.first) << "     "
                 << pairOfRoundPlayers.second->getName() << " chose " << GeneralUI::moveToString(pairOfMoves.second) << "\n\n";
@@ -74,6 +74,10 @@ bool BaseTournamentUI::onEvent(const Event& event) const
             default:
                 std::cout << "It's the draw\n";
                 Sleep(3000);
+
+                GeneralUI::clearConsoleSmoothly();
+                showRules();
+                showScore();
                 break;
             }
         }
@@ -97,6 +101,16 @@ bool BaseTournamentUI::onEvent(const Event& event) const
     }
 
     return false;
+}
+
+void BaseTournamentUI::showRules() const
+{
+    std::shared_ptr<BaseTournament> tournamentPtr;
+    if (tournamentPtr = tournament.lock())
+    {
+        std::cout << "Game mode - " << tournamentPtr->getName() << " | Rules - " << GeneralUI::rulesToString(tournamentPtr->getRules()->getRules()) << "\n";
+        std::cout << stringOfPossibleMoves(tournamentPtr->getRules()->getPossibleMoves()) << "\n\n";
+    }
 }
 
 std::string BaseTournamentUI::stringOfPossibleMoves(const std::vector<Move>& possibleMoves) const

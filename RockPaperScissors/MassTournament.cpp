@@ -27,18 +27,20 @@ void MassTournament::PlayRound()
 	while (true)
 	{
 		mEventCallback(Event::RoundStarted);
-		mVectorofMassiveRoundMoves.clear();
+		
+		std::vector<Move> vectorOfMassiveRoundMoves;
+		vectorOfMassiveRoundMoves.reserve(mPlayers.size());
 
 		//Main cycle
 		for (const auto& player : mPlayers)
 		{
-			mVectorofMassiveRoundMoves.push_back(player->makeMove(mRules));
+			vectorOfMassiveRoundMoves.push_back(player->makeMove(mRules));
 			mEventCallback(Event::PlayerMadeMove);
 		}
 
 		mEventCallback(Event::MainCycleEnded);
 
-		std::set<Move> tempUniqueMoves(mVectorofMassiveRoundMoves.begin(), mVectorofMassiveRoundMoves.end());
+		std::set<Move> tempUniqueMoves(vectorOfMassiveRoundMoves.begin(), vectorOfMassiveRoundMoves.end());
 		if (tempUniqueMoves.size() == mRules->getPossibleMoves().size() || tempUniqueMoves.size() == 1)
 		{
 			mEventCallback(Event::CantDetermineLooser);
@@ -52,12 +54,12 @@ void MassTournament::PlayRound()
 		{
 			for (int j = 0; j < uniqueMoves.size(); ++j)
 			{
-				mPairOfRoundMoves = { uniqueMoves[i], uniqueMoves[j] };
+				std::pair<Move, Move> pairOfRoundMoves = { uniqueMoves[i], uniqueMoves[j] };
 				if (i == j) { continue; }
-				if (mRules->determineWinner(mPairOfRoundMoves) == 1) { break; } //If beats someone
+				if (mRules->determineWinner(pairOfRoundMoves) == 1) { break; } //If beats someone
 
-				if ((j == uniqueMoves.size() - 1 && mRules->determineWinner(mPairOfRoundMoves) == 2)
-					|| (i == uniqueMoves.size() - 1 && j == uniqueMoves.size() - 2 && mRules->determineWinner(mPairOfRoundMoves) == 2))
+				if ((j == uniqueMoves.size() - 1 && mRules->determineWinner(pairOfRoundMoves) == 2)
+					|| (i == uniqueMoves.size() - 1 && j == uniqueMoves.size() - 2 && mRules->determineWinner(pairOfRoundMoves) == 2))
 				{
 					uniqueMoves.erase(uniqueMoves.begin() + i);
 					i = -1;
@@ -74,9 +76,9 @@ void MassTournament::PlayRound()
 		else
 		{
 			//Remove losers
-			for (int i = static_cast<int>(mVectorofMassiveRoundMoves.size()) - 1; i >= 0; --i)
+			for (int i = static_cast<int>(vectorOfMassiveRoundMoves.size()) - 1; i >= 0; --i)
 			{
-				if (mVectorofMassiveRoundMoves[i] != uniqueMoves[0])
+				if (vectorOfMassiveRoundMoves[i] != uniqueMoves[0])
 				{
 					mPlayers.erase(mPlayers.begin() + i);
 				}

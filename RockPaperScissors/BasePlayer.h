@@ -9,25 +9,28 @@
 class BasePlayer
 {
 public:
-	BasePlayer() : score(0), wins(0) {}
+	BasePlayer() : mScore(0), mWins(0) {}
 	virtual ~BasePlayer() {};
 
-	virtual Move makeMove(const std::unique_ptr<BaseGameRules>& rules) const = 0;
+	virtual Move makeMove(const std::unique_ptr<BaseGameRules>& rules) = 0;
 	virtual std::string getName() const = 0;
 	virtual bool isBot() const = 0;
 	
-	int getScore() const;
-	void resetScore();
-	void incrementScore();
+	int getScore() const { return mScore; }
+	void resetScore() { mScore = 0; }
+	void incrementScore() { ++mScore; }
 	
-	int getWins() { return wins; }
-	void resetWins() { wins = 0; }
-	void incrementWins() { ++wins; };
+	int getWins() const { return mWins; }
+	void resetWins() { mWins = 0; }
+	void incrementWins() { ++mWins; };
 	
+	Move getLastMoveMade() const { return mLastMoveMade; }
+
 	//for debug purposes only, need to delete
-	void setScore(const int& number);
+	void setScore(const int& number) { mScore = number; }
 
 protected:
-	int wins;
-	int score;
+	int mWins;
+	int mScore;
+	Move mLastMoveMade{};
 };

@@ -7,7 +7,7 @@
 
 void DuelTournament::Play()
 {
-    mPairOfRoundPlayers = PairOfPlayersSignature{ mPlayers[0], mPlayers[1] };
+    mPairOfCurrentRoundPlayers = PairOfPlayersSignature{ mPlayers[0], mPlayers[1] };
     
     while (true)
     {

@@ -14,17 +14,17 @@ void GridTournament::Play()
 	{
 		for (int i = 0; i < mPlayers.size(); i = i + 2)
 		{
-			mEventCallback(Event::GridRoundStarted);
+			//mEventCallback(Event::GridRoundStarted);
 
 			if (i == mPlayers.size() - 1) {
-				mPairOfRoundPlayers = { mPlayers[i], bot };
+				mPairOfCurrentRoundPlayers = { mPlayers[i], bot };
 			}
 			else {
-				mPairOfRoundPlayers = { mPlayers[i], mPlayers[i + 1] };
+				mPairOfCurrentRoundPlayers = { mPlayers[i], mPlayers[i + 1] };
 			}
 			PlayRound();
 
-			mEventCallback(Event::GridRoundEnded);
+			//mEventCallback(Event::GridRoundEnded);
 		}
 
 		//Remove loosers

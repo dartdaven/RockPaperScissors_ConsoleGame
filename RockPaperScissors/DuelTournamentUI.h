@@ -7,7 +7,6 @@ class DuelTournamentUI :
 	using BaseTournamentUI::BaseTournamentUI;
 
 	//general funcs
-	void showRules() const override;
 	void showScore() const override;
 };
 

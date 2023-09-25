@@ -11,30 +11,30 @@
 void BaseTournament::PlayRound()
 {
     assert(mEventCallback);
-    assert(mPairOfRoundPlayers.first || mPairOfRoundPlayers.second);
+    assert(mPairOfCurrentRoundPlayers.first || mPairOfCurrentRoundPlayers.second);
 
-    while (mPairOfRoundPlayers.first->getWins() != mWins4Victory && mPairOfRoundPlayers.second->getWins() != mWins4Victory)
+    mEventCallback(Event::RoundStarted);
+
+    while (mPairOfCurrentRoundPlayers.first->getWins() != mWins4Victory && mPairOfCurrentRoundPlayers.second->getWins() != mWins4Victory)
     {
-        mEventCallback(Event::RoundStarted);
-
-        Move firstMove = mPairOfRoundPlayers.first->makeMove(mRules);
+        Move firstMove = mPairOfCurrentRoundPlayers.first->makeMove(mRules);
         mEventCallback(Event::PlayerMadeMove);
 
-        Move secondMove = mPairOfRoundPlayers.second->makeMove(mRules);
+        Move secondMove = mPairOfCurrentRoundPlayers.second->makeMove(mRules);
         mEventCallback(Event::PlayerMadeMove);
 
-        mPairOfRoundMoves = std::pair<Move, Move>(firstMove, secondMove);
+        std::pair<Move, Move> pairOfRoundMoves {firstMove, secondMove};
 
-        int tempResult = mRules->determineWinner(mPairOfRoundMoves);
+        int tempResult = mRules->determineWinner(pairOfRoundMoves);
         
         switch (tempResult)
         {
         case 1:
-            mPairOfRoundPlayers.first->incrementWins();
+            mPairOfCurrentRoundPlayers.first->incrementWins();
             break;
 
         case 2:
-            mPairOfRoundPlayers.second->incrementWins();
+            mPairOfCurrentRoundPlayers.second->incrementWins();
             break;
 
         default: break;
@@ -44,15 +44,15 @@ void BaseTournament::PlayRound()
     }
     
     mEventCallback(Event::RoundEnded);
-
-    if (mPairOfRoundPlayers.first->getWins() == mWins4Victory)
+    
+    if (mPairOfCurrentRoundPlayers.first->getWins() == mWins4Victory)
     {
-        mPairOfRoundPlayers.first->incrementScore();
-        mPairOfRoundPlayers.first->resetWins();
+        mPairOfCurrentRoundPlayers.first->incrementScore();
+        mPairOfCurrentRoundPlayers.first->resetWins();
     }
     else
     {
-        mPairOfRoundPlayers.second->incrementScore();
-        mPairOfRoundPlayers.second->resetWins();
+        mPairOfCurrentRoundPlayers.second->incrementScore();
+        mPairOfCurrentRoundPlayers.second->resetWins();
     }
 }
