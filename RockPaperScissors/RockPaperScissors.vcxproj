@@ -147,6 +147,8 @@
     <ClCompile Include="BasePlayer.cpp" />
     <ClCompile Include="MassTournamentUI.cpp" />
     <ClCompile Include="RockPaperScissors.cpp" />
+    <ClCompile Include="RulesFactory.cpp" />
+    <ClCompile Include="TournamentFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseTournamentUI.h" />
