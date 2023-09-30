@@ -5,10 +5,12 @@ The objectives of this exercise are:
 
 ## Original problem
 To develop a console game "Rock, Paper, Scissors" using OOP. There are two variants of the rules of the game: Classical and from the Big Bang Theory TV-Series. The possibility of a multi-person tournament with a configurable number of rounds and the determination of the winner at the end of the game is necessary. You also need to add the ability to play with the bot.
+
 The program should be able to expand, be easily supported etc.
 
 ## My Design
 First you have to choose the rules of the game.
+
 Then the choice of championship depends on the number of players:
 - If 1, endless game against the computer
 - If 2, endless game against each other
