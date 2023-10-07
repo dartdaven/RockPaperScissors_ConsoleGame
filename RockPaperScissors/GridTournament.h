@@ -1,24 +1,20 @@
 #pragma once
 
+#include <cmath>
+
 #include "BaseTournament.h"
-
-
 
 class GridTournament : public BaseTournament
 {
 public:
-	GridTournament(std::vector<std::shared_ptr<BasePlayer>>&& players, Rules rules, int wins4Victory = 1)
-		: BaseTournament(std::move(players), rules, wins4Victory)
-	{
-		mName = (mPlayers.size() > 4) ? "Grid 8" : "Grid 4";
-		
-		//hard code to fix
-		mTours = (mPlayers.size() > 4) ? 3 : 2;
-	}
+	GridTournament(std::vector<std::shared_ptr<BasePlayer>>&& players, Rules rules, int wins4Victory = 1);
+
 
 	void Play() override;
+	unsigned short getTourCount() const { return mTourCount; }
+
 private:
-	int mTourCount{0};
-	int mTours;
+	unsigned short mTourCount{0};
+	unsigned short mTours;
 };
 

@@ -1,7 +1,9 @@
-#pragma once
+﻿#pragma once
 #include "BaseTournamentUI.h"
 
 #include <functional>
+
+class GridCell;
 
 class GridTournamentUI : public BaseTournamentUI
 {
@@ -14,18 +16,17 @@ public:
 	void showRules() const override;
 	void showScore() const override {};
 
-private:
-	int mCellSize { 8 };
-	std::string mEmptyCell;
-	mutable std::vector<std::string> mGridCells;
-	
-	//should not be const
-	void WriteToCell(int cellNumber, const std::string& whatToWrite) const;
-	
-	std::function<void()> ShowGrid;
-	void ShowGrid8() const;
-	void ShowGrid4() const;
+	void showGrid() const;
 
-	mutable int mCurrentRound{1};
+private:
+	mutable std::vector<std::vector<GridCell>> mGrid; 
+	
+	unsigned short mCellSize { 8 };
+
+	mutable unsigned short mCurrentRound{ 0 };
+	mutable unsigned short mCurrentTour{ 0 };
+
+	std::string mComputerName { "Computer" };
+	std::vector<std::string> mSymbols { "─┐ ", "─┴─", "─┬─", "─┘ ", "─┤ ", " └─", " ┌─", " │ " };
 };
 

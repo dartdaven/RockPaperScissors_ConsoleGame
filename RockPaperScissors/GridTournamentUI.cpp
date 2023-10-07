@@ -8,6 +8,7 @@
 #include <conio.h>
 
 #include "GeneralUI.h"
+#include "GridCell.h"
 
 
 GridTournamentUI::GridTournamentUI(std::shared_ptr<BaseTournament>& tournament)
@@ -15,26 +16,25 @@ GridTournamentUI::GridTournamentUI(std::shared_ptr<BaseTournament>& tournament)
 {
 	SetConsoleOutputCP(CP_UTF8);
 
-	mEmptyCell = std::string(mCellSize, ' ');
-	mGridCells = std::vector<std::string>(14, mEmptyCell);
-
-	//fill the grid
+	//Allocate the grid
+	unsigned short tours = static_cast<unsigned short>(ceil(log2(tournament->getPlayers().size())));
+	unsigned short gridBase = pow(2, tours);
+	mGrid = std::vector<std::vector<GridCell>> (tours);
+	
+	for (int i = 0, k = gridBase; i < mGrid.size(); ++i, k /= 2) {
+		mGrid[i].reserve(k);
+	}
+	
+	//Fill the grid
 	for (int i = 0; i < tournament->getPlayers().size(); ++i)
 	{
-		WriteToCell(i, tournament->getPlayers()[i]->getName());
+		mGrid[0].emplace_back(tournament->getPlayers()[i]->getName());
 	}
 	if (tournament->getPlayers().size() % 2)
 	{
-		WriteToCell(static_cast<int>(tournament->getPlayers().size()), "Computer");
+		mGrid[0].emplace_back(mComputerName);
 	}
 
-	//choose the grid
-	if (tournament->getPlayers().size() > 4) {
-		ShowGrid = std::bind(&GridTournamentUI::ShowGrid8, this);
-	}
-	else {
-		ShowGrid = std::bind(&GridTournamentUI::ShowGrid4, this);
-	}
 }
 
 bool GridTournamentUI::onEvent(const Event& event) const
@@ -48,7 +48,7 @@ bool GridTournamentUI::onEvent(const Event& event) const
 	case Event::RoundStarted:
 		GeneralUI::clearConsoleSmoothly();
 		showRules();
-		ShowGrid();
+		showGrid();
 		BaseTournamentUI::onEvent(event);
 		return true;
 	
@@ -64,30 +64,26 @@ bool GridTournamentUI::onEvent(const Event& event) const
 	{
  		BaseTournamentUI::onEvent(event);
 
-		int CellToWrite{};
-
-		//hardcode don't like it
-		if (mCurrentRound == 1) { CellToWrite = 8; }
-		if (mCurrentRound == 2) { CellToWrite = 9; }
-		if (mCurrentRound == 3) { CellToWrite = 10; }
-		if (mCurrentRound == 4) { CellToWrite = 11; }
-		if (mCurrentRound == 5) { CellToWrite = 12; }
-		if (mCurrentRound == 6) { CellToWrite = 13; }
-
 		{
 			std::pair< std::shared_ptr<BasePlayer>, std::shared_ptr<BasePlayer>> pairOfRoundPlayers = tournamentPtr->getPairOfCurrentRoundPlayers();
-			
-			if (pairOfRoundPlayers.first->getWins() == tournamentPtr->getWins4Victory())
+
+			if (mCurrentTour != mGrid.size() - 1)
 			{
-				WriteToCell(CellToWrite, pairOfRoundPlayers.first->getName());
-			}
-			else
-			{
-				WriteToCell(CellToWrite, pairOfRoundPlayers.second->getName());
+				if (pairOfRoundPlayers.first->getWins() == tournamentPtr->getWins4Victory())
+				{
+					mGrid[mCurrentTour + 1].emplace_back(pairOfRoundPlayers.first->getName());
+				}
+				else
+				{
+					if (!pairOfRoundPlayers.second->isBot())
+					{
+						mGrid[mCurrentTour + 1].emplace_back(pairOfRoundPlayers.second->getName());
+					}
+				}
 			}
 		}
 
-		mCurrentRound++;
+		++mCurrentRound;
 		return true;
 	}
 
@@ -98,27 +94,20 @@ bool GridTournamentUI::onEvent(const Event& event) const
 		}
 		else
 		{
-			winnerOfTheTournament("Computer");
+			winnerOfTheTournament(mComputerName);
 		}
 		return true;
 
 	case Event::MainCycleEnded:
-		if (mCurrentRound < 5) 
-		{ 
-			mCurrentRound = 5;
-			if (tournamentPtr->getPlayers().size() % 2)
-			{
-				WriteToCell(11, "Computer");
-			}
+		
+		++mCurrentTour;
+		mCurrentRound = 0;
+
+		if (mCurrentTour < mGrid.size() && mGrid[mCurrentTour].size() % 2)
+		{
+			mGrid[mCurrentTour].emplace_back(mComputerName);
 		}
-		else if (mCurrentRound > 5 && mCurrentRound < 7) 
-		{ 
-			mCurrentRound = 7;
-			if (tournamentPtr->getPlayers().size() % 2)
-			{
-				WriteToCell(13, "Computer");
-			}
-		}
+
 		return true;
 	}
 	
@@ -139,79 +128,123 @@ void GridTournamentUI::showRules() const
 	}
 }
 
-void GridTournamentUI::ShowGrid8() const
+void GridTournamentUI::showGrid() const
 {
-	//hardcode don't like it
-	bool Round1{ 1 }, Round2{ 1 }, Round3{ 1 }, Round4{ 1 }, Round5{ 1 }, Round6{ 1 }, Round7{ 1 };
+	while (_kbhit()) { static_cast<void>(_getche()); } //Clear input buffer
 
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD start;
-	start.X = 0;
-	start.Y = 3;
+	COORD initialPosition{ 0, 3 };
+	COORD position = initialPosition;
+
+	auto goDown = [&]() {
+		++position.Y;
+		SetConsoleCursorPosition(hConsole, position);
+	};
 
 	while (!_kbhit())
 	{
-		SetConsoleCursorPosition(hConsole, start);
+		SetConsoleCursorPosition(hConsole, initialPosition);
+		position = initialPosition;
 
-		std::cout << (Round1 ? mGridCells[0] : mEmptyCell) << " ─┐" << "\n";
-		std::cout << (Round1 ? mGridCells[1] : mEmptyCell) << " ─┴─ " << (Round5 ? mGridCells[8] : mEmptyCell) << " ─┐" << "\n";
-		std::cout << (Round2 ? mGridCells[2] : mEmptyCell) << " ─┬─ " << (Round5 ? mGridCells[9] : mEmptyCell) << " ─┤" << "\n";
-		std::cout << (Round2 ? mGridCells[3] : mEmptyCell) << " ─┘  " << mEmptyCell << "  └─ " << (Round7 ? mGridCells[12] : mEmptyCell) << "\n";
-		std::cout << (Round3 ? mGridCells[4] : mEmptyCell) << " ─┐  " << mEmptyCell << "  ┌─ " << (Round7 ? mGridCells[13] : mEmptyCell) << "\n";
-		std::cout << (Round3 ? mGridCells[5] : mEmptyCell) << " ─┴─ " << (Round6 ? mGridCells[10] : mEmptyCell) << " ─┤" << "\n";
-		std::cout << (Round4 ? mGridCells[6] : mEmptyCell) << " ─┬─ " << (Round6 ? mGridCells[11] : mEmptyCell) << " ─┘" << "\n";
-		std::cout << (Round4 ? mGridCells[7] : mEmptyCell) << " ─┘" << "\n\n";
-		std::cout << "Press any key to continue...\n";
+		for (int tourNumber = 0; tourNumber < mGrid.size(); ++tourNumber) {
 
-		//hardcode don't like it
-		if (mCurrentRound == 1) { Round1 = !Round1; }
-		if (mCurrentRound == 2) { Round2 = !Round2; }
-		if (mCurrentRound == 3) { Round3 = !Round3; }
-		if (mCurrentRound == 4) { Round4 = !Round4; }
-		if (mCurrentRound == 5) { Round5 = !Round5; }
-		if (mCurrentRound == 6) { Round6 = !Round6; }
-		if (mCurrentRound == 7) { Round7 = !Round7; }
+			//Output Players
+			int playersIterator{ 0 };
+
+			while (playersIterator < mGrid[tourNumber].size()) {
+				for (int i = 0; (i < pow(2, tourNumber) - 1); ++i) {
+					goDown();
+				}
+
+				std::cout << mGrid[tourNumber][playersIterator].showCell();
+				++playersIterator;
+				goDown();
+
+				if (playersIterator < mGrid[tourNumber].size())
+				{
+					std::cout << mGrid[tourNumber][playersIterator].showCell();
+					++playersIterator;
+					goDown();
+				}
+
+				for (int i = 0; (i < pow(2, tourNumber) - 1); ++i) {
+					goDown();
+				}
+			}
+
+			position.X += mCellSize + 1;
+			position.Y = initialPosition.Y;
+			SetConsoleCursorPosition(hConsole, position);
+
+			//Draw Grid Elements
+			int times = mGrid[tourNumber].capacity() / 4;
+
+			if (tourNumber == 0) {
+				for (int i = 0; i < times; ++i) {
+					for (int j = 0; j < 4; ++j) {
+						std::cout << mSymbols[j];
+						goDown();
+					}
+				}
+			}
+			else {
+				for (int i = 0; i < times; ++i) {
+					for (int i = 0; (i < pow(2, tourNumber) - 1); ++i) {
+						goDown();
+					}
+
+					//Magic numbers Warning
+					std::cout << mSymbols[0];
+					goDown();
+					std::cout << mSymbols[4];
+					goDown();
+
+					for (int i = 0; (i < pow(2, tourNumber) - 2); ++i) {
+						std::cout << mSymbols[7];
+						goDown();
+					}
+
+					std::cout << mSymbols[5];
+					goDown();
+					std::cout << mSymbols[6];
+					goDown();
+
+					for (int i = 0; (i < pow(2, tourNumber) - 2); ++i) {
+						std::cout << mSymbols[7];
+						goDown();
+					}
+
+					std::cout << mSymbols[4];
+					goDown();
+					std::cout << mSymbols[3];
+					goDown();
+
+					for (int i = 0; (i < pow(2, tourNumber) - 1); ++i) {
+						goDown();
+					}
+				}
+			}
+
+			if (tourNumber != mGrid.size() - 1) {
+				position.X += 4 ; //Magic number, bc symbols are larger size
+				position.Y = initialPosition.Y;
+				SetConsoleCursorPosition(hConsole, position);
+			}
+			else {
+				position.Y = initialPosition.Y + pow(2, mGrid.size());
+				SetConsoleCursorPosition(hConsole, position);
+				std::cout << "\nPress any key to continue...";
+			}
+		}
+		
+		mGrid[mCurrentTour][mCurrentRound * 2].swapVisibility();
+		mGrid[mCurrentTour][(mCurrentRound * 2) + 1].swapVisibility();
 		
 		Sleep(500);
 	}
-	char fake = _getch();
-}
 
-void GridTournamentUI::ShowGrid4() const
-{
-	//hardcode don't like it
-	bool Round1{ 1 }, Round2{ 1 }, Round5{ 1 };
-
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD start;
-	start.X = 0;
-	start.Y = 3;
-
-	while (!_kbhit())
-	{
-		SetConsoleCursorPosition(hConsole, start);
-
-		std::cout << (Round1 ? mGridCells[0] : mEmptyCell) << " ─┐" << "\n";
-		std::cout << (Round1 ? mGridCells[1] : mEmptyCell) << " ─┴─ " << (Round5 ? mGridCells[8] : mEmptyCell) << "\n";
-		std::cout << (Round2 ? mGridCells[2] : mEmptyCell) << " ─┬─ " << (Round5 ? mGridCells[9] : mEmptyCell) << "\n";
-		std::cout << (Round2 ? mGridCells[3] : mEmptyCell) << " ─┘ " << "\n\n";
-		std::cout << "Press any key to continue...\n";
-
-		//hardcode don't like it
-		if (mCurrentRound == 1) { Round1 = !Round1; }
-		if (mCurrentRound == 2) { Round2 = !Round2; }
-		if (mCurrentRound == 5) { Round5 = !Round5; }
-		
-		Sleep(500);
-	}
-	char fake = _getch();
-}
-
-void GridTournamentUI::WriteToCell(int cellNumber, const std::string& whatToWrite) const
-{
-	std::string temp = whatToWrite;
-	if (temp.size() > mGridCells[0].size()) { temp.resize(mGridCells[0].size()); }
-
-	mGridCells[cellNumber] = mEmptyCell;
-	mGridCells[cellNumber].replace(0, temp.size(), temp);
+	mGrid[mCurrentTour][mCurrentRound * 2].setToVisible();
+	mGrid[mCurrentTour][(mCurrentRound * 2) + 1].setToVisible();
+	
+	static_cast<void>(_getch());
 }

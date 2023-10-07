@@ -2,7 +2,16 @@
 
 enum class Move { Rock, Paper, Scissors, Lizard, Spock };
 
-enum class TournamentType { Duel, EachVsEach, Mass, Grid, Count };
+enum class TournamentType {
+
+	Start,
+	Duel = Start,
+	MultiplayerTournamentsStart,
+	EachVsEach = MultiplayerTournamentsStart,
+	Mass,
+	Grid,
+	Count
+};
 
 enum class Event {
 	RoundStarted, //Base, Grid

@@ -84,6 +84,9 @@
     <ClCompile Include="TournamentFactory.cpp">
       <Filter>Files\Factories</Filter>
     </ClCompile>
+    <ClCompile Include="GridCell.cpp">
+      <Filter>Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enums.h">
@@ -148,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="TournamentFactory.h">
       <Filter>Files\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCell.h">
+      <Filter>Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

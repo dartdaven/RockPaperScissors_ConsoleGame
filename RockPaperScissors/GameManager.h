@@ -18,7 +18,7 @@ private:
 	std::unique_ptr<BaseTournamentUI> mUI;
 	std::vector<std::shared_ptr<BasePlayer>> mPlayersToMove;
 
-	int mMaxPlayersNumber = 8;
+	int mMaxPlayersNumber = 10;
 	int mMaxPlayersNameSize = 8;
 
 };

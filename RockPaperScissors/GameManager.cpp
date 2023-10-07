@@ -22,26 +22,21 @@ void GameManager::start()
     std::cout << "Choose the rules: ";
     for (int i = 0; i < static_cast<int>(Rules::Count); i++)
     {
-        if (i != static_cast<int>(Rules::Count) - 1)
-        {
+        if (i != static_cast<int>(Rules::Count) - 1) {
             std::cout << i + 1 << " - " << GeneralUI::rulesToString(static_cast<Rules>(i)) << ", ";
         }
-        else
-        {
+        else {
             std::cout << i + 1 << " - " << GeneralUI::rulesToString(static_cast<Rules>(i)) << ": ";
         }
-
     }
 
     while (true)
     {
-        if (std::cin >> tempRulesInt && tempRulesInt - 1 >= 0 && tempRulesInt - 1 < static_cast<int>(Rules::Count))
-        {
+        if (std::cin >> tempRulesInt && tempRulesInt - 1 >= 0 && tempRulesInt - 1 < static_cast<int>(Rules::Count)) {
             selectedRules = static_cast<Rules>(--tempRulesInt);
             break;
         }
-        else
-        {
+        else {
             GeneralUI::incorrectInput();
         }
     }  
@@ -56,8 +51,7 @@ void GameManager::start()
 
         std::cout << "How many players are going to play (" << mMaxPlayersNumber << " max): ";
         if (std::cin >> playersAmount && playersAmount >= 1 && playersAmount <= mMaxPlayersNumber) { break; }
-        else
-        {
+        else {
             std::cout << "The game do not support THAT amount of players\n";
         }
     }
@@ -95,8 +89,7 @@ void GameManager::start()
 
         std::cout << "What kind of tournament do you prefer: ";
         
-        //Duel tournament should always be 0
-        for (int i = 1; i < static_cast<int>(TournamentType::Count); i++)
+        for (int i = static_cast<int>(TournamentType::MultiplayerTournamentsStart); i < static_cast<int>(TournamentType::Count); i++)
         {
             if (i != static_cast<int>(TournamentType::Count) - 1)
             {

@@ -140,6 +140,7 @@
     <ClCompile Include="EachVsEachTournamentUI.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GeneralUI.cpp" />
+    <ClCompile Include="GridCell.cpp" />
     <ClCompile Include="GridTournament.cpp" />
     <ClCompile Include="GridTournamentUI.cpp" />
     <ClCompile Include="HumanPlayer.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="BaseGameRules.h" />
     <ClInclude Include="GeneralUI.h" />
+    <ClInclude Include="GridCell.h" />
     <ClInclude Include="GridTournament.h" />
     <ClInclude Include="GridTournamentUI.h" />
     <ClInclude Include="HumanPlayer.h" />

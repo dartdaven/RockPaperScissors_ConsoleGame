@@ -6,6 +6,13 @@
 
 #include "ComputerPlayer.h"
 
+GridTournament::GridTournament(std::vector<std::shared_ptr<BasePlayer>>&& players, Rules rules, int wins4Victory)
+	: BaseTournament(std::move(players), rules, wins4Victory)
+{
+	mName = "Grid " + std::to_string(static_cast<unsigned short>(std::pow(2, std::ceil(std::log2(mPlayers.size())))));
+	mTours = static_cast<unsigned short>(ceil(log2(mPlayers.size())));
+}
+
 void GridTournament::Play()
 {
 	std::shared_ptr<ComputerPlayer> bot = std::make_unique<ComputerPlayer>();
@@ -14,8 +21,6 @@ void GridTournament::Play()
 	{
 		for (int i = 0; i < mPlayers.size(); i = i + 2)
 		{
-			//mEventCallback(Event::GridRoundStarted);
-
 			if (i == mPlayers.size() - 1) {
 				mPairOfCurrentRoundPlayers = { mPlayers[i], bot };
 			}
@@ -23,8 +28,6 @@ void GridTournament::Play()
 				mPairOfCurrentRoundPlayers = { mPlayers[i], mPlayers[i + 1] };
 			}
 			PlayRound();
-
-			//mEventCallback(Event::GridRoundEnded);
 		}
 
 		//Remove loosers
@@ -41,5 +44,5 @@ void GridTournament::Play()
 		mEventCallback(Event::MainCycleEnded);
 	}
 
-	mEventCallback(Event::TournamentEnded);
+ 	mEventCallback(Event::TournamentEnded);
 }

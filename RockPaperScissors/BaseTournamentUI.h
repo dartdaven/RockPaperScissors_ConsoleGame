@@ -14,7 +14,8 @@ public:
 	{
 		tournament->setEventCallback(std::bind(&BaseTournamentUI::onEvent, this, std::placeholders::_1));
 	}
-	virtual ~BaseTournamentUI() {};
+	
+	virtual ~BaseTournamentUI() {}; //= 0;  I am not ready for this yet
 
 	//true if the Event has been processed
 	virtual bool onEvent(const Event& event) const;
