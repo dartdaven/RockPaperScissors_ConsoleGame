@@ -1,22 +1,162 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Files">
+      <UniqueIdentifier>{5a0f53e1-1c08-405e-97f6-04155f2f5da2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Files\Factories">
+      <UniqueIdentifier>{a3ff4b47-ef6c-4b93-bb0e-7b4c09421cb5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Files\Players">
+      <UniqueIdentifier>{2f26029b-82f6-4d7e-af52-b277ce9f66c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Files\Tournaments">
+      <UniqueIdentifier>{cd471955-8e7d-4950-9930-b8f5e9acdaa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Files\Rules">
+      <UniqueIdentifier>{4cac1e13-2a3a-4818-9d50-122f9bf196f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Files\Misc">
+      <UniqueIdentifier>{e732f767-3d08-44e2-a050-e1719a8754c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Files\TournamentUIs">
+      <UniqueIdentifier>{458e04c6-4c01-4921-aa86-5095b65155ff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="RockPaperScissors.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Factories\RulesFactory.cpp">
+      <Filter>Files\Factories</Filter>
     </ClCompile>
+    <ClCompile Include="Factories\TournamentFactory.cpp">
+      <Filter>Files\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="Players\BasePlayer.cpp">
+      <Filter>Files\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="Players\HumanPlayer.cpp">
+      <Filter>Files\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="Players\ComputerPlayer.cpp">
+      <Filter>Files\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="Tournaments\EachVsEachTournament.cpp">
+      <Filter>Files\Tournaments</Filter>
+    </ClCompile>
+    <ClCompile Include="Tournaments\BaseTournament.cpp">
+      <Filter>Files\Tournaments</Filter>
+    </ClCompile>
+    <ClCompile Include="Tournaments\DuelTournament.cpp">
+      <Filter>Files\Tournaments</Filter>
+    </ClCompile>
+    <ClCompile Include="Tournaments\GridTournament.cpp">
+      <Filter>Files\Tournaments</Filter>
+    </ClCompile>
+    <ClCompile Include="Tournaments\MassTournament.cpp">
+      <Filter>Files\Tournaments</Filter>
+    </ClCompile>
+    <ClCompile Include="Rules\BaseGameRules.cpp">
+      <Filter>Files\Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="Rules\BigBangGameRules.cpp">
+      <Filter>Files\Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="Rules\ClassicGameRules.cpp">
+      <Filter>Files\Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\GameManager.cpp">
+      <Filter>Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\GeneralUI.cpp">
+      <Filter>Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\GridCell.cpp">
+      <Filter>Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="TournamentUIs\BaseTournamentUI.cpp">
+      <Filter>Files\TournamentUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="TournamentUIs\DuelTournamentUI.cpp">
+      <Filter>Files\TournamentUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="TournamentUIs\EachVsEachTournamentUI.cpp">
+      <Filter>Files\TournamentUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="TournamentUIs\GridTournamentUI.cpp">
+      <Filter>Files\TournamentUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="TournamentUIs\MassTournamentUI.cpp">
+      <Filter>Files\TournamentUIs</Filter>
+    </ClCompile>
+    <ClCompile Include="RockPaperScissors.cpp">
+      <Filter>Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Factories\RulesFactory.h">
+      <Filter>Files\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="Factories\TournamentFactory.h">
+      <Filter>Files\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="Players\BasePlayer.h">
+      <Filter>Files\Players</Filter>
+    </ClInclude>
+    <ClInclude Include="Players\HumanPlayer.h">
+      <Filter>Files\Players</Filter>
+    </ClInclude>
+    <ClInclude Include="Players\ComputerPlayer.h">
+      <Filter>Files\Players</Filter>
+    </ClInclude>
+    <ClInclude Include="Tournaments\EachVsEachTournament.h">
+      <Filter>Files\Tournaments</Filter>
+    </ClInclude>
+    <ClInclude Include="Tournaments\BaseTournament.h">
+      <Filter>Files\Tournaments</Filter>
+    </ClInclude>
+    <ClInclude Include="Tournaments\DuelTournament.h">
+      <Filter>Files\Tournaments</Filter>
+    </ClInclude>
+    <ClInclude Include="Tournaments\GridTournament.h">
+      <Filter>Files\Tournaments</Filter>
+    </ClInclude>
+    <ClInclude Include="Tournaments\MassTournament.h">
+      <Filter>Files\Tournaments</Filter>
+    </ClInclude>
+    <ClInclude Include="Rules\BaseGameRules.h">
+      <Filter>Files\Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="Rules\BigBangGameRules.h">
+      <Filter>Files\Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="Rules\ClassicGameRules.h">
+      <Filter>Files\Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\Enums.h">
+      <Filter>Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\GameManager.h">
+      <Filter>Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\GeneralUI.h">
+      <Filter>Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\GridCell.h">
+      <Filter>Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="TournamentUIs\BaseTournamentUI.h">
+      <Filter>Files\TournamentUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="TournamentUIs\DuelTournamentUI.h">
+      <Filter>Files\TournamentUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="TournamentUIs\EachVsEachTournamentUI.h">
+      <Filter>Files\TournamentUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="TournamentUIs\GridTournamentUI.h">
+      <Filter>Files\TournamentUIs</Filter>
+    </ClInclude>
+    <ClInclude Include="TournamentUIs\MassTournamentUI.h">
+      <Filter>Files\TournamentUIs</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
