@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "GameManager.h"
+#include "Misc/GameManager.h"
 
 int main()
 {   

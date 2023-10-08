@@ -4,8 +4,8 @@
 #include <sstream>
 #include <Windows.h>
 
-#include "GeneralUI.h"
-#include "BaseTournament.h"
+#include "../Misc/GeneralUI.h"
+#include "../Tournaments/BaseTournament.h"
 
 //for confetti
 #include <thread>

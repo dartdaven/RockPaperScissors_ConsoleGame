@@ -2,8 +2,8 @@
 
 #include <cassert>
 
-#include "ClassicGameRules.h"
-#include "BigBangGameRules.h"
+#include "../Rules/ClassicGameRules.h"
+#include "../Rules/BigBangGameRules.h"
 
 std::unique_ptr<BaseGameRules> RulesFactory::generateRules(Rules rulesType)
 {

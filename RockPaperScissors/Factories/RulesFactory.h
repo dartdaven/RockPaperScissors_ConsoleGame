@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "BaseGameRules.h"
+#include "../Rules/BaseGameRules.h"
 
 class RulesFactory
 {

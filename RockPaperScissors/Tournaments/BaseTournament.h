@@ -4,9 +4,9 @@
 #include <memory>
 #include <functional>
 
-#include "Enums.h"
-#include "BasePlayer.h"
-#include "RulesFactory.h"
+#include "../Misc/Enums.h"
+#include "../Players/BasePlayer.h"
+#include "../Factories/RulesFactory.h"
 
 class BaseGameRules;
 

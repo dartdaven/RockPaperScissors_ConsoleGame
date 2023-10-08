@@ -2,7 +2,7 @@
 
 #include <random>
 
-#include "Enums.h"
+#include "../Misc/Enums.h"
 
 Move ComputerPlayer::makeMove(const std::unique_ptr<BaseGameRules>& rules)
 {

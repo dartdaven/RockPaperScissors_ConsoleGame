@@ -5,7 +5,7 @@
 #include <vector>
 #include <Windows.h>
 
-#include "Enums.h"
+#include "../Misc/Enums.h"
 
 void MassTournament::Play()
 {

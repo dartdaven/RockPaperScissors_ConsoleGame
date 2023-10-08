@@ -4,7 +4,7 @@
 #include <Windows.h>
 #include <memory>
 
-#include "ComputerPlayer.h"
+#include "../Players/ComputerPlayer.h"
 
 GridTournament::GridTournament(std::vector<std::shared_ptr<BasePlayer>>&& players, Rules rules, int wins4Victory)
 	: BaseTournament(std::move(players), rules, wins4Victory)

@@ -4,8 +4,6 @@
 
 #include <random>
 
-#include "EachVsEachTournamentUI.h"
-
 class EachVsEachTournament : public BaseTournament
 {
 public:

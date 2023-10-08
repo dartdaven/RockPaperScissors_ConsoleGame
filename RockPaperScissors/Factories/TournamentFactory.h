@@ -2,9 +2,9 @@
 
 #include <memory>
 
-#include "Enums.h"
+#include "../Misc/Enums.h"
 
-#include "BaseTournamentUI.h"
+#include "../TournamentUIs/BaseTournamentUI.h"
 
 
 class TournamentFactory

@@ -4,7 +4,7 @@
 #include <vector>
 #include <memory>
 
-#include "Enums.h"
+#include "../Misc/Enums.h"
 
 enum class Rules { Classic, BigBang, Count };
 

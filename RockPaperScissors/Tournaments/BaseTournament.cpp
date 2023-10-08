@@ -6,7 +6,7 @@
 #include <Windows.h>
 #include <assert.h>
 
-#include "BasePlayer.h"
+#include "../Players/BasePlayer.h"
 
 void BaseTournament::PlayRound()
 {

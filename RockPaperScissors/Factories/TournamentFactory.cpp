@@ -2,15 +2,15 @@
 
 #include <cassert>
 
-#include "BaseTournament.h"
-#include "DuelTournament.h"
-#include "DuelTournamentUI.h"
-#include "EachVsEachTournament.h"
-#include "EachVsEachTournamentUI.h"
-#include "MassTournament.h"
-#include "MassTournamentUI.h"
-#include "GridTournament.h"
-#include "GridTournamentUI.h"
+#include "../Tournaments/BaseTournament.h"
+#include "../Tournaments/DuelTournament.h"
+#include "../Tournaments/EachVsEachTournament.h"
+#include "../Tournaments/MassTournament.h"
+#include "../Tournaments/GridTournament.h"
+#include "../TournamentUIs/DuelTournamentUI.h"
+#include "../TournamentUIs/EachVsEachTournamentUI.h"
+#include "../TournamentUIs/MassTournamentUI.h"
+#include "../TournamentUIs/GridTournamentUI.h"
 
 void TournamentFactory::createTournamentWithUI(std::shared_ptr<BaseTournament>& outTournament, std::unique_ptr<BaseTournamentUI>& outUI, TournamentType tournamentType, std::vector<std::shared_ptr<BasePlayer>>&& players, Rules rulesType, int wins4Wictory)
 {

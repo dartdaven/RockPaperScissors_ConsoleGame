@@ -5,13 +5,13 @@
 #include <string>
 
 #include "GeneralUI.h"
-#include "TournamentFactory.h"
-#include "RulesFactory.h"
+#include "../Factories/TournamentFactory.h"
+#include "../Factories/RulesFactory.h"
 
-#include "ComputerPlayer.h"
-#include "HumanPlayer.h"
+#include "../Players/ComputerPlayer.h"
+#include "../Players/HumanPlayer.h"
 
-#include "Enums.h"
+#include "../Misc/Enums.h"
 
 void GameManager::start()
 {   

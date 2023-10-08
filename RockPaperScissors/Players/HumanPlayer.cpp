@@ -4,7 +4,7 @@
 #include <limits>
 #include <conio.h>
 
-#include "GeneralUI.h"
+#include "../Misc/GeneralUI.h"
 
 Move HumanPlayer::makeMove(const std::unique_ptr<BaseGameRules>& rules)
 {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Enums.h"
-#include "BaseGameRules.h"
+#include "../Misc/Enums.h"
+#include "../Rules/BaseGameRules.h"
 
 class GeneralUI
 {

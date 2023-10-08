@@ -18,6 +18,54 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Factories\RulesFactory.cpp" />
+    <ClCompile Include="Factories\TournamentFactory.cpp" />
+    <ClCompile Include="Misc\GameManager.cpp" />
+    <ClCompile Include="Misc\GeneralUI.cpp" />
+    <ClCompile Include="Misc\GridCell.cpp" />
+    <ClCompile Include="Players\BasePlayer.cpp" />
+    <ClCompile Include="Players\ComputerPlayer.cpp" />
+    <ClCompile Include="Players\HumanPlayer.cpp" />
+    <ClCompile Include="RockPaperScissors.cpp" />
+    <ClCompile Include="Rules\BaseGameRules.cpp" />
+    <ClCompile Include="Rules\BigBangGameRules.cpp" />
+    <ClCompile Include="Rules\ClassicGameRules.cpp" />
+    <ClCompile Include="Tournaments\BaseTournament.cpp" />
+    <ClCompile Include="Tournaments\DuelTournament.cpp" />
+    <ClCompile Include="Tournaments\EachVsEachTournament.cpp" />
+    <ClCompile Include="Tournaments\GridTournament.cpp" />
+    <ClCompile Include="Tournaments\MassTournament.cpp" />
+    <ClCompile Include="TournamentUIs\BaseTournamentUI.cpp" />
+    <ClCompile Include="TournamentUIs\DuelTournamentUI.cpp" />
+    <ClCompile Include="TournamentUIs\EachVsEachTournamentUI.cpp" />
+    <ClCompile Include="TournamentUIs\GridTournamentUI.cpp" />
+    <ClCompile Include="TournamentUIs\MassTournamentUI.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Factories\RulesFactory.h" />
+    <ClInclude Include="Factories\TournamentFactory.h" />
+    <ClInclude Include="Misc\Enums.h" />
+    <ClInclude Include="Misc\GameManager.h" />
+    <ClInclude Include="Misc\GeneralUI.h" />
+    <ClInclude Include="Misc\GridCell.h" />
+    <ClInclude Include="Players\BasePlayer.h" />
+    <ClInclude Include="Players\ComputerPlayer.h" />
+    <ClInclude Include="Players\HumanPlayer.h" />
+    <ClInclude Include="Rules\BaseGameRules.h" />
+    <ClInclude Include="Rules\BigBangGameRules.h" />
+    <ClInclude Include="Rules\ClassicGameRules.h" />
+    <ClInclude Include="Tournaments\BaseTournament.h" />
+    <ClInclude Include="Tournaments\DuelTournament.h" />
+    <ClInclude Include="Tournaments\EachVsEachTournament.h" />
+    <ClInclude Include="Tournaments\GridTournament.h" />
+    <ClInclude Include="Tournaments\MassTournament.h" />
+    <ClInclude Include="TournamentUIs\BaseTournamentUI.h" />
+    <ClInclude Include="TournamentUIs\DuelTournamentUI.h" />
+    <ClInclude Include="TournamentUIs\EachVsEachTournamentUI.h" />
+    <ClInclude Include="TournamentUIs\GridTournamentUI.h" />
+    <ClInclude Include="TournamentUIs\MassTournamentUI.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -127,54 +175,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="BaseGameRules.cpp" />
-    <ClCompile Include="BaseTournament.cpp" />
-    <ClCompile Include="BaseTournamentUI.cpp" />
-    <ClCompile Include="BigBangGameRules.cpp" />
-    <ClCompile Include="ClassicGameRules.cpp" />
-    <ClCompile Include="ComputerPlayer.cpp" />
-    <ClCompile Include="DuelTournament.cpp" />
-    <ClCompile Include="DuelTournamentUI.cpp" />
-    <ClCompile Include="EachVsEachTournament.cpp" />
-    <ClCompile Include="EachVsEachTournamentUI.cpp" />
-    <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="GeneralUI.cpp" />
-    <ClCompile Include="GridCell.cpp" />
-    <ClCompile Include="GridTournament.cpp" />
-    <ClCompile Include="GridTournamentUI.cpp" />
-    <ClCompile Include="HumanPlayer.cpp" />
-    <ClCompile Include="MassTournament.cpp" />
-    <ClCompile Include="BasePlayer.cpp" />
-    <ClCompile Include="MassTournamentUI.cpp" />
-    <ClCompile Include="RockPaperScissors.cpp" />
-    <ClCompile Include="RulesFactory.cpp" />
-    <ClCompile Include="TournamentFactory.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="BaseTournamentUI.h" />
-    <ClInclude Include="BigBangGameRules.h" />
-    <ClInclude Include="ClassicGameRules.h" />
-    <ClInclude Include="ComputerPlayer.h" />
-    <ClInclude Include="DuelTournament.h" />
-    <ClInclude Include="DuelTournamentUI.h" />
-    <ClInclude Include="EachVsEachTournament.h" />
-    <ClInclude Include="EachVsEachTournamentUI.h" />
-    <ClInclude Include="Enums.h" />
-    <ClInclude Include="GameManager.h" />
-    <ClInclude Include="BaseGameRules.h" />
-    <ClInclude Include="GeneralUI.h" />
-    <ClInclude Include="GridCell.h" />
-    <ClInclude Include="GridTournament.h" />
-    <ClInclude Include="GridTournamentUI.h" />
-    <ClInclude Include="HumanPlayer.h" />
-    <ClInclude Include="MassTournament.h" />
-    <ClInclude Include="BasePlayer.h" />
-    <ClInclude Include="BaseTournament.h" />
-    <ClInclude Include="MassTournamentUI.h" />
-    <ClInclude Include="RulesFactory.h" />
-    <ClInclude Include="TournamentFactory.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

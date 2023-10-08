@@ -7,8 +7,8 @@
 #include <chrono>
 #include <conio.h>
 
-#include "GeneralUI.h"
-#include "GridCell.h"
+#include "../Misc/GeneralUI.h"
+#include "../Misc/GridCell.h"
 
 
 GridTournamentUI::GridTournamentUI(std::shared_ptr<BaseTournament>& tournament)

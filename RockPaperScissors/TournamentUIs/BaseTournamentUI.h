@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-#include "BaseTournament.h"
-#include "BaseGameRules.h"
+#include "../Tournaments/BaseTournament.h"
+#include "../Rules/BaseGameRules.h"
 
 class BasePlayer;
 

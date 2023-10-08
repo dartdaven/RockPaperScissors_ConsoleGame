@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "BaseTournamentUI.h"
+#include "../TournamentUIs/BaseTournamentUI.h"
 class BaseTournament;
 
 class GameManager

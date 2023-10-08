@@ -3,7 +3,7 @@
 #include <iostream>
 #include <windows.h>
 
-#include "Enums.h"
+#include "../Misc/Enums.h"
 
 void DuelTournament::Play()
 {

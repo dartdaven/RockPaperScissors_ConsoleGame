@@ -3,7 +3,7 @@
 #include <cassert>
 #include <Windows.h>
 
-#include "GeneralUI.h"
+#include "../Misc/GeneralUI.h"
 
 bool EachVsEachTournamentUI::onEvent(const Event& event) const
 {

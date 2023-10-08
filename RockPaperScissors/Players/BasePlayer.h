@@ -3,8 +3,8 @@
 #include <string>
 #include <memory>
 
-#include "BaseGameRules.h"
-#include "Enums.h"
+#include "../Rules/BaseGameRules.h"
+#include "../Misc/Enums.h"
 
 class BasePlayer
 {
