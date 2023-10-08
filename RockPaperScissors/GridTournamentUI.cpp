@@ -18,7 +18,7 @@ GridTournamentUI::GridTournamentUI(std::shared_ptr<BaseTournament>& tournament)
 
 	//Allocate the grid
 	unsigned short tours = static_cast<unsigned short>(ceil(log2(tournament->getPlayers().size())));
-	unsigned short gridBase = pow(2, tours);
+	unsigned short gridBase = static_cast<unsigned short>(pow(2, tours));
 	mGrid = std::vector<std::vector<GridCell>> (tours);
 	
 	for (int i = 0, k = gridBase; i < mGrid.size(); ++i, k /= 2) {
@@ -65,11 +65,11 @@ bool GridTournamentUI::onEvent(const Event& event) const
  		BaseTournamentUI::onEvent(event);
 
 		{
-			std::pair< std::shared_ptr<BasePlayer>, std::shared_ptr<BasePlayer>> pairOfRoundPlayers = tournamentPtr->getPairOfCurrentRoundPlayers();
+			BaseTournament::PairOfPlayersSignature pairOfRoundPlayers = tournamentPtr->getPairOfCurrentRoundPlayers();
 
 			if (mCurrentTour != mGrid.size() - 1)
 			{
-				if (pairOfRoundPlayers.first->getWins() == tournamentPtr->getWins4Victory())
+				if (tournamentPtr->getPairOfRoundWins().first == tournamentPtr->getWins4Victory())
 				{
 					mGrid[mCurrentTour + 1].emplace_back(pairOfRoundPlayers.first->getName());
 				}
@@ -177,7 +177,7 @@ void GridTournamentUI::showGrid() const
 			SetConsoleCursorPosition(hConsole, position);
 
 			//Draw Grid Elements
-			int times = mGrid[tourNumber].capacity() / 4;
+			unsigned short times = static_cast<unsigned short>(mGrid[tourNumber].capacity()) / 4;
 
 			if (tourNumber == 0) {
 				for (int i = 0; i < times; ++i) {
@@ -226,17 +226,18 @@ void GridTournamentUI::showGrid() const
 			}
 
 			if (tourNumber != mGrid.size() - 1) {
-				position.X += 4 ; //Magic number, bc symbols are larger size
+				position.X += 4 ; //Magic number, because symbols are larger size
 				position.Y = initialPosition.Y;
 				SetConsoleCursorPosition(hConsole, position);
 			}
 			else {
-				position.Y = initialPosition.Y + pow(2, mGrid.size());
+				position.Y = initialPosition.Y + static_cast<SHORT>(pow(2, mGrid.size()));
 				SetConsoleCursorPosition(hConsole, position);
 				std::cout << "\nPress any key to continue...";
 			}
 		}
 		
+		//TODO blink only needed elements, not the whole grid
 		mGrid[mCurrentTour][mCurrentRound * 2].swapVisibility();
 		mGrid[mCurrentTour][(mCurrentRound * 2) + 1].swapVisibility();
 		

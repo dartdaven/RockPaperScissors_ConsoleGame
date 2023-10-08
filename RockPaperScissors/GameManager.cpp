@@ -122,7 +122,7 @@ void GameManager::start()
         mPlayersToMove.reserve(playersAmount);
         setupPlayers();
         TournamentFactory::createTournamentWithUI(mTournament, mUI,
-                                                    tournamentType, std::move(mPlayersToMove), selectedRules);
+                                                    tournamentType, std::move(mPlayersToMove), selectedRules, wins4Victory);
         mTournament->Play();
         return;
     }

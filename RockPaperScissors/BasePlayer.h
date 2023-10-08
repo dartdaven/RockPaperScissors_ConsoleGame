@@ -9,7 +9,7 @@
 class BasePlayer
 {
 public:
-	BasePlayer() : mScore(0), mWins(0) {}
+	BasePlayer() : mScore(0) {}
 	virtual ~BasePlayer() {};
 
 	virtual Move makeMove(const std::unique_ptr<BaseGameRules>& rules) = 0;
@@ -20,17 +20,12 @@ public:
 	void resetScore() { mScore = 0; }
 	void incrementScore() { ++mScore; }
 	
-	int getWins() const { return mWins; }
-	void resetWins() { mWins = 0; }
-	void incrementWins() { ++mWins; };
-	
 	Move getLastMoveMade() const { return mLastMoveMade; }
 
-	//for debug purposes only, need to delete
+	//for debug purposes only
 	void setScore(const int& number) { mScore = number; }
 
 protected:
-	int mWins;
 	int mScore;
 	Move mLastMoveMade{};
 };

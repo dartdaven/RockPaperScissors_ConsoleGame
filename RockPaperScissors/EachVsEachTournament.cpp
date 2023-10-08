@@ -20,16 +20,13 @@ void EachVsEachTournament::Play()
         }
     }
 
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dist(0, 1);
-
-    std::shuffle(pairsOfPlayers.begin(), pairsOfPlayers.end(), gen);
+    std::shuffle(pairsOfPlayers.begin(), pairsOfPlayers.end(), mGen);
 
     //Main cycle
     for (auto& pair : pairsOfPlayers)
     {
-        if (dist(gen))
+        std::uniform_int_distribution<> dist(0, 1);
+        if (dist(mGen))
         {
             std::swap(pair.first, pair.second);
         }
@@ -37,18 +34,22 @@ void EachVsEachTournament::Play()
         PlayRound();
     }
 
-    //After tournament has been played  
     mEventCallback(Event::MainCycleEnded);
 
+    //delete loosers
     int maxScore = mPlayers[0]->getScore();
     for (int i = 0; i < mPlayers.size(); ++i)
     {
         if (mPlayers[i]->getScore() > maxScore) { maxScore = mPlayers[i]->getScore(); }
     }
+    
+    auto it = mPlayers.begin();
 
-    for (int i = static_cast<int>(mPlayers.size()) - 1; i >= 0; --i)
-    {
-        if (mPlayers[i]->getScore() != maxScore) { mPlayers.erase(mPlayers.begin() + i); }
+    while (it != mPlayers.end()) {
+        if ((*it)->getScore() != maxScore) {
+            it = mPlayers.erase(it);
+        }
+        else { ++it; }
     }
 
     //if there is 1 highScorer 
@@ -58,25 +59,7 @@ void EachVsEachTournament::Play()
         return;
     }
 
-    //if there are 2 highScorers
-    if (mPlayers.size() == 2)
-    {
-        mPairOfCurrentRoundPlayers = PairOfPlayersSignature(mPlayers[0], mPlayers[1]);
-        mEventCallback(Event::CantDetermineTheWinner);
-
-        PlayRound();
-
-        if (mPairOfCurrentRoundPlayers.first->getScore() > mPairOfCurrentRoundPlayers.second->getScore())
-        {
-            mPlayers.erase(mPlayers.end());
-        }
-        else { mPlayers.erase(mPlayers.begin()); }
-
-        mEventCallback(Event::TournamentEnded);
-        return;
-    }
-
-    //If there are more than two high scorer
+    //If there are more than one high scorer
     else
     {
         mEventCallback(Event::CantDetermineTheWinner);

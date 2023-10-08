@@ -19,7 +19,7 @@ bool BaseTournamentUI::onEvent(const Event& event) const
     if (tournamentPtr = tournament.lock()) {}
     else { assert(false); }
 
-    std::pair< std::shared_ptr<BasePlayer>, std::shared_ptr<BasePlayer>> pairOfRoundPlayers = tournamentPtr->getPairOfCurrentRoundPlayers();
+    BaseTournament::PairOfPlayersSignature pairOfRoundPlayers = tournamentPtr->getPairOfCurrentRoundPlayers();
     
     switch (event)
     {
@@ -56,9 +56,10 @@ bool BaseTournamentUI::onEvent(const Event& event) const
 
                 if (tournamentPtr->getWins4Victory() > 1)
                 {
-                    std::cout << pairOfRoundPlayers.first->getName() << " won " << pairOfRoundPlayers.first->getWins() << " of " << tournamentPtr->getWins4Victory() << std::endl;
+                    std::cout << pairOfRoundPlayers.first->getName() << " won " << tournamentPtr->getPairOfRoundWins().first << " of " << tournamentPtr->getWins4Victory() << std::endl;
                 }
                 Sleep(3000);
+
                 break;
 
             case 2:
@@ -66,27 +67,29 @@ bool BaseTournamentUI::onEvent(const Event& event) const
 
                 if (tournamentPtr->getWins4Victory() > 1)
                 {
-                    std::cout << pairOfRoundPlayers.second->getName() << " won " << pairOfRoundPlayers.second->getWins() << " of " << tournamentPtr->getWins4Victory() << std::endl;
+                    std::cout << pairOfRoundPlayers.second->getName() << " won " << tournamentPtr->getPairOfRoundWins().second << " of " << tournamentPtr->getWins4Victory() << std::endl;
                 }
                 Sleep(3000);
+
                 break;
 
             default:
                 std::cout << "It's the draw\n";
                 Sleep(3000);
 
-                GeneralUI::clearConsoleSmoothly();
-                showRules();
-                showScore();
                 break;
             }
+
+            GeneralUI::clearConsoleSmoothly();
+            showRules();
+            showScore();
         }
 
         return true;
 
     case Event::RoundEnded:
 
-        if (pairOfRoundPlayers.first->getWins() == tournamentPtr->getWins4Victory())
+        if (tournamentPtr->getPairOfRoundWins().first == tournamentPtr->getWins4Victory())
         {
             std::cout << pairOfRoundPlayers.first->getName() << " is the winner of the round\n";
             Sleep(3000);

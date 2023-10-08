@@ -20,27 +20,30 @@ public:
 	using PairOfPlayersSignature = std::pair< std::shared_ptr<BasePlayer>, std::shared_ptr<BasePlayer>>;
 
 	virtual void Play() = 0;
-	virtual void PlayRound();
 
 	void setEventCallback(std::function<void(const Event&)>&& callback) { mEventCallback = std::move(callback); }
 
 	//Getters
 	const std::vector<std::shared_ptr<BasePlayer>>& getPlayers() const { return mPlayers; }
-	const std::unique_ptr<BaseGameRules>& getRules() const { return mRules; };
-	const int& getWins4Victory() const { return mWins4Victory; };
-	const std::string& getName() const { return mName; };
+	const std::unique_ptr<BaseGameRules>& getRules() const { return mRules; }
+	const unsigned short& getWins4Victory() const { return mWins4Victory; }
+	const std::string& getName() const { return mName; }
 
 	//RoundGetters
-	const PairOfPlayersSignature& getPairOfCurrentRoundPlayers() const { return mPairOfCurrentRoundPlayers; };
+	const PairOfPlayersSignature& getPairOfCurrentRoundPlayers() const { return mPairOfCurrentRoundPlayers; }
+	const std::pair<int, int>& getPairOfRoundWins() const { return mPairOfRoundWins; }
 
 protected:
+	virtual void PlayRound();
+
 	std::vector<std::shared_ptr<BasePlayer>> mPlayers;
 	std::unique_ptr<BaseGameRules> mRules;
-	int mWins4Victory;
+	unsigned short mWins4Victory;
 	std::string mName;
 
 	//For Round purposes
 	PairOfPlayersSignature mPairOfCurrentRoundPlayers;
+	std::pair<int, int> mPairOfRoundWins;
 	
 	//Callbacks
 	std::function<void(const Event&)> mEventCallback;

@@ -12,10 +12,12 @@ void BaseTournament::PlayRound()
 {
     assert(mEventCallback);
     assert(mPairOfCurrentRoundPlayers.first || mPairOfCurrentRoundPlayers.second);
+    
+    mPairOfRoundWins = { 0, 0 };
 
     mEventCallback(Event::RoundStarted);
 
-    while (mPairOfCurrentRoundPlayers.first->getWins() != mWins4Victory && mPairOfCurrentRoundPlayers.second->getWins() != mWins4Victory)
+    while (mPairOfRoundWins.first != mWins4Victory && mPairOfRoundWins.second != mWins4Victory)
     {
         Move firstMove = mPairOfCurrentRoundPlayers.first->makeMove(mRules);
         mEventCallback(Event::PlayerMadeMove);
@@ -30,11 +32,11 @@ void BaseTournament::PlayRound()
         switch (tempResult)
         {
         case 1:
-            mPairOfCurrentRoundPlayers.first->incrementWins();
+            ++mPairOfRoundWins.first;
             break;
 
         case 2:
-            mPairOfCurrentRoundPlayers.second->incrementWins();
+            ++mPairOfRoundWins.second;
             break;
 
         default: break;
@@ -45,14 +47,10 @@ void BaseTournament::PlayRound()
     
     mEventCallback(Event::RoundEnded);
     
-    if (mPairOfCurrentRoundPlayers.first->getWins() == mWins4Victory)
-    {
+    if (mPairOfRoundWins.first == mWins4Victory) {
         mPairOfCurrentRoundPlayers.first->incrementScore();
-        mPairOfCurrentRoundPlayers.first->resetWins();
     }
-    else
-    {
+    else {
         mPairOfCurrentRoundPlayers.second->incrementScore();
-        mPairOfCurrentRoundPlayers.second->resetWins();
     }
 }

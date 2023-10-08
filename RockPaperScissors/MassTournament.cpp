@@ -76,7 +76,7 @@ void MassTournament::PlayRound()
 		else
 		{
 			//Remove losers
-			for (int i = static_cast<int>(vectorOfMassiveRoundMoves.size()) - 1; i >= 0; --i)
+			for (int i = static_cast<int>(vectorOfMassiveRoundMoves.size()) - 1; i >= 0; --i) //static cast to avoid warning
 			{
 				if (vectorOfMassiveRoundMoves[i] != uniqueMoves[0])
 				{
