@@ -45,7 +45,6 @@ void BaseTournament::PlayRound()
         mEventCallback(Event::AllPlayersMadeMoves);
     }
     
-    mEventCallback(Event::RoundEnded);
     
     if (mPairOfRoundWins.first == mWins4Victory) {
         mPairOfCurrentRoundPlayers.first->incrementScore();
@@ -53,4 +52,6 @@ void BaseTournament::PlayRound()
     else {
         mPairOfCurrentRoundPlayers.second->incrementScore();
     }
+
+    mEventCallback(Event::RoundEnded);
 }

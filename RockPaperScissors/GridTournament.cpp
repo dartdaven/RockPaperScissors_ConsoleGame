@@ -16,7 +16,10 @@ GridTournament::GridTournament(std::vector<std::shared_ptr<BasePlayer>>&& player
 void GridTournament::Play()
 {
 	std::shared_ptr<ComputerPlayer> bot = std::make_unique<ComputerPlayer>();
-	
+
+	mEventCallback(Event::TournamentStarted);
+
+	//Main cycle
 	while (mPlayers.size() > 1 || mTourCount != mTours)
 	{
 		for (int i = 0; i < mPlayers.size(); i = i + 2)

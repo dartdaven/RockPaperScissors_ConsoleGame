@@ -8,6 +8,7 @@
 
 void EachVsEachTournament::Play()
 {
+
     //Random sorting, but everyone will play with each other
     std::vector<PairOfPlayersSignature> pairsOfPlayers;
     pairsOfPlayers.reserve((mPlayers.size() * (mPlayers.size() - 1)) / 2);
@@ -22,6 +23,8 @@ void EachVsEachTournament::Play()
 
     std::shuffle(pairsOfPlayers.begin(), pairsOfPlayers.end(), mGen);
 
+    mEventCallback(Event::TournamentStarted);
+    
     //Main cycle
     for (auto& pair : pairsOfPlayers)
     {

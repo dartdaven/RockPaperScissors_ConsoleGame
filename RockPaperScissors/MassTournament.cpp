@@ -9,6 +9,8 @@
 
 void MassTournament::Play()
 {
+	mEventCallback(Event::TournamentStarted);
+
 	while (true)
 	{
 		PlayRound();
@@ -31,14 +33,12 @@ void MassTournament::PlayRound()
 		std::vector<Move> vectorOfMassiveRoundMoves;
 		vectorOfMassiveRoundMoves.reserve(mPlayers.size());
 
-		//Main cycle
 		for (const auto& player : mPlayers)
 		{
 			vectorOfMassiveRoundMoves.push_back(player->makeMove(mRules));
 			mEventCallback(Event::PlayerMadeMove);
 		}
-
-		mEventCallback(Event::MainCycleEnded);
+		mEventCallback(Event::AllPlayersMadeMoves);
 
 		std::set<Move> tempUniqueMoves(vectorOfMassiveRoundMoves.begin(), vectorOfMassiveRoundMoves.end());
 		if (tempUniqueMoves.size() == mRules->getPossibleMoves().size() || tempUniqueMoves.size() == 1)
@@ -87,4 +87,5 @@ void MassTournament::PlayRound()
 			break;
 		}
 	}
+	mEventCallback(Event::RoundEnded);
 }

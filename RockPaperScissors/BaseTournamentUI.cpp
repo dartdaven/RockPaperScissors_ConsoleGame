@@ -101,6 +101,10 @@ bool BaseTournamentUI::onEvent(const Event& event) const
         }
 
         return true;
+
+    case Event::TournamentStarted:
+        
+        return true;
     }
 
     return false;
@@ -137,6 +141,8 @@ std::string BaseTournamentUI::stringOfPossibleMoves(const std::vector<Move>& pos
 //not mine
 void BaseTournamentUI::winnerOfTheTournament(const std::string& name) const
 {
+    while (_kbhit()) { static_cast<void>(_getche()); } //clear input Buffer
+
     int consoleWidth = 80; // Adjust this value based on your console width
     int consoleHeight = 24; // Adjust this value based on your console height
     std::string congratulations = "Congratulations to " + name;

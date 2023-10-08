@@ -19,6 +19,9 @@
     <Filter Include="Files\Factories">
       <UniqueIdentifier>{9c2fbc59-788c-453a-9f02-2a12df7cb67d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Files\Misc">
+      <UniqueIdentifier>{bc2b9a84-885d-4f09-ac43-08e90b177997}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameManager.cpp">
@@ -63,9 +66,6 @@
     <ClCompile Include="BaseTournamentUI.cpp">
       <Filter>Files\TournamentUI</Filter>
     </ClCompile>
-    <ClCompile Include="GeneralUI.cpp">
-      <Filter>Files</Filter>
-    </ClCompile>
     <ClCompile Include="EachVsEachTournamentUI.cpp">
       <Filter>Files\TournamentUI</Filter>
     </ClCompile>
@@ -84,14 +84,14 @@
     <ClCompile Include="TournamentFactory.cpp">
       <Filter>Files\Factories</Filter>
     </ClCompile>
+    <ClCompile Include="GeneralUI.cpp">
+      <Filter>Files\Misc</Filter>
+    </ClCompile>
     <ClCompile Include="GridCell.cpp">
-      <Filter>Files</Filter>
+      <Filter>Files\Misc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Enums.h">
-      <Filter>Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameManager.h">
       <Filter>Files</Filter>
     </ClInclude>
@@ -131,9 +131,6 @@
     <ClInclude Include="BaseTournamentUI.h">
       <Filter>Files\TournamentUI</Filter>
     </ClInclude>
-    <ClInclude Include="GeneralUI.h">
-      <Filter>Files</Filter>
-    </ClInclude>
     <ClInclude Include="EachVsEachTournamentUI.h">
       <Filter>Files\TournamentUI</Filter>
     </ClInclude>
@@ -152,8 +149,14 @@
     <ClInclude Include="TournamentFactory.h">
       <Filter>Files\Factories</Filter>
     </ClInclude>
+    <ClInclude Include="GeneralUI.h">
+      <Filter>Files\Misc</Filter>
+    </ClInclude>
     <ClInclude Include="GridCell.h">
-      <Filter>Files</Filter>
+      <Filter>Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Enums.h">
+      <Filter>Files\Misc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

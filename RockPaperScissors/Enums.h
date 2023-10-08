@@ -15,11 +15,11 @@ enum class TournamentType {
 
 enum class Event {
 	RoundStarted, //Base, Grid
-	PlayerMadeMove, // Base,
-	AllPlayersMadeMoves, //Base,
+	PlayerMadeMove, // Base
+	AllPlayersMadeMoves, //Base
 	RoundEnded, //Base, Grid
-	TournamentStarted,
-	TournamentEnded, //Eve, Massive, Grid
+	TournamentStarted, //Duel, EvE, Massive, Grid
+	TournamentEnded, //Duel, EvE, Massive, Grid
 	MainCycleEnded, //EvE, Massive, Grid
 	CantDetermineTheWinner, //Eve, Massive
 	CantDetermineLooser //Massive

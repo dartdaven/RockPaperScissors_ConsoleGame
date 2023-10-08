@@ -7,7 +7,6 @@
 
 bool MassTournamentUI::onEvent(const Event& event) const
 {
-	if (BaseTournamentUI::onEvent(event)) { return true; }
 
 	std::shared_ptr<BaseTournament> tournamentPtr;
 	if (tournamentPtr = tournament.lock()) {}
@@ -15,7 +14,9 @@ bool MassTournamentUI::onEvent(const Event& event) const
 
 	switch (event)
 	{
-	case Event::MainCycleEnded:
+	case Event::RoundEnded: return true;
+
+	case Event::AllPlayersMadeMoves:
 		std::cout << "Here are all the moves:\n";
 		{
 			auto players = tournamentPtr->getPlayers();
@@ -60,6 +61,8 @@ bool MassTournamentUI::onEvent(const Event& event) const
 		winnerOfTheTournament(tournamentPtr->getPlayers()[0]->getName());
 		return true;
 	}
+
+	if (BaseTournamentUI::onEvent(event)) { return true; }
 
 	std::cerr << "Wrong tournament Event has been passed";
 	assert(false);

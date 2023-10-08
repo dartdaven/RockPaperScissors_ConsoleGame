@@ -111,6 +111,8 @@ bool GridTournamentUI::onEvent(const Event& event) const
 		return true;
 	}
 	
+	if (BaseTournamentUI::onEvent(event)) { return true; }
+
 	std::cerr << "Wrong tournament Event has been passed";
 	assert(false);
 	return false;
